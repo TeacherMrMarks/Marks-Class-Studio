@@ -12,10 +12,38 @@ declare module 'jspdf' {
   }
 }
 
+declare module 'mammoth' {
+  const mammoth: {
+    convertToHtml(input: { arrayBuffer: ArrayBuffer }, options?: unknown): Promise<{ value: string; messages: Array<{ type: string; message: string }> }>;
+    images: {
+      imgElement(fn: (image: { contentType: string; read(type: 'base64'): Promise<string> }) => Promise<{ src: string }>): unknown;
+    };
+  };
+  export default mammoth;
+}
+
+declare module 'pdfjs-dist' {
+  export const GlobalWorkerOptions: { workerSrc: string };
+  export function getDocument(options: { data: Uint8Array }): {
+    promise: Promise<{
+      numPages: number;
+      getPage(pageNumber: number): Promise<{ getTextContent(): Promise<{ items: unknown[] }> }>;
+    }>;
+  };
+}
+
+declare module 'pdfjs-dist/build/pdf.worker.min.mjs?url' {
+  const url: string;
+  export default url;
+}
+
 declare module '@netlify/blobs' {
+  type BlobEntry = { key: string };
   type Store = {
     setJSON(key: string, value: unknown): Promise<void>;
-    get(key: string, options: { type: 'json' }): Promise<unknown>;
+    get(key: string, options: { type: 'json' }): Promise<any>;
+    list(): Promise<{ blobs: BlobEntry[] }>;
+    delete(key: string): Promise<void>;
   };
   export function getStore(name: string): Store;
 }
