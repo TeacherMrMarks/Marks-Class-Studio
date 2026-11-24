@@ -1,47 +1,32 @@
-# Teacher Marks Edu Studio — V1
+# Marks Class Studio — V2
 
-Primeira base funcional da plataforma pedagógica para criação, edição e exportação de atividades escolares.
+Segunda versão funcional da plataforma de criação e edição de atividades pedagógicas.
 
-## O que já existe nesta versão
-- Editor de atividade em página A4
-- Padrão Arial 12 e texto justificado
-- Negrito, itálico, sublinhado, alinhamentos, listas, recuo, desfazer/refazer
-- Espaçamento entre linhas
-- Cabeçalho com escola, professor, disciplina, turma e título
-- Logomarca da escola
-- Autosave local com debounce de 700 ms
-- Tentativa de sincronização com Netlify Blobs quando online
-- Exportação para PDF
-- Compartilhamento do PDF pelo compartilhamento nativo do celular quando disponível
-- Estrutura preparada para Biblioteca, Modelos, Histórico e importação PDF/Word
+## O que mudou na V2
+- Importação de PDF com extração de texto para a área editável.
+- Importação de DOCX com texto, formatação básica e imagens incorporadas.
+- O conteúdo importado abre imediatamente na folha A4.
+- Edição e prévia atualizadas em tempo real.
+- Biblioteca de atividades funcional: abrir, duplicar e excluir.
+- Sincronização das atividades com Netlify Blobs quando online.
+- Modelos funcionais: Atividade, Avaliação, Recuperação, Simulado e Pesquisa.
+- Histórico de versões com restauração.
+- Botão Nova atividade.
+- Inserção de imagens diretamente no editor.
+- Prévia em modal, impressão, PDF e compartilhamento.
+- Identidade atualizada para Marks Class Studio.
 
-## Publicar no GitHub e Netlify
-1. Extraia o ZIP.
-2. Crie um repositório novo no GitHub.
-3. Envie todos os arquivos desta pasta para o repositório.
-4. No Netlify, escolha **Add new site > Import an existing project** e conecte o repositório.
-5. O Netlify deverá reconhecer:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-6. Publique o site.
+## Observações de importação
+- PDF: a V2 extrai o texto e o transforma em conteúdo editável. Imagens embutidas dentro do PDF ainda não são reconstruídas automaticamente como elementos independentes.
+- DOCX: imagens incorporadas são preservadas quando possível.
+- DOC antigo: converta para DOCX ou PDF antes de importar.
 
-O `netlify.toml` já traz essas configurações.
+## Estrutura
+- Arquivos da raiz: README.md, index.html, netlify.toml, package.json, tsconfig.json, vite.config.ts
+- Pasta src: main.ts, style.css, vendor.d.ts
+- Pasta netlify/functions: save-activity.mts, load-activity.mts, list-activities.mts, delete-activity.mts
 
-## Desenvolvimento local
-```bash
-npm install
-npm run dev
-```
-
-## Próximos módulos previstos
-1. Biblioteca real de atividades e arquivos
-2. Importação inteligente de PDF/Word para conteúdo editável
-3. Modelos de Atividade / Avaliação / Recuperação / Simulado / Pesquisa
-4. Histórico de versões com restauração
-5. Geração inteligente de questões por tema/habilidade
-6. Gabarito e versão do professor
-7. Banco de questões e classificação por série, disciplina, habilidade e dificuldade
-8. Compartilhamento por link temporário
-
-## Observação
-Nesta V1, o upload de PDF/Word já aparece na interface, mas a interpretação automática do arquivo ainda não foi ligada. A arquitetura já está preparada para isso.
+## Deploy no Netlify
+Build command: `npm run build`
+Publish directory: `dist`
+Functions: `netlify/functions`
