@@ -5,7 +5,7 @@ export default async (req: Request) => {
   try {
     const body = await req.json();
     const id = String(body.id || 'default');
-    const store = getStore('teacher-marks-activities');
+    const store = getStore('marks-class-activities');
     await store.setJSON(id, body);
     return Response.json({ ok: true, id });
   } catch (error) {
