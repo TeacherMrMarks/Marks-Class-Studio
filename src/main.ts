@@ -200,18 +200,14 @@ let selectedObjectId: string | null = null;
 let saveTimer: number | undefined;
 let toastTimer: number | undefined;
 let importBusy = false;
-let activeRibbon = 'home';
+let activeRibbon = '';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML = `
 <div class="app-shell">
   <div class="top-chrome"><header class="topbar">
-    <div class="brand"><span class="brand-mark">MC</span><div><strong>Marks Class Studio</strong><small>Editor inteligente de atividades • V7</small></div></div>
-    <span id="saveStatus" class="status saved">Salvo localmente</span>
-    <button class="btn" id="toggleSidebar" type="button">☰ Painel</button>
-  </header>
-
-      <nav class="side-menu top-library-menu" aria-label="Acervos e ferramentas">
+    <div class="brand"><span class="brand-mark">MC</span><div><strong>Marks Class Studio</strong><small>Editor inteligente de atividades • V7.2</small></div></div>
+    <nav class="side-menu top-library-menu" aria-label="Acervos e ferramentas">
         <button id="myActivitiesBtn" type="button"><span>📁 Minhas Atividades</span></button>
         <button id="libraryBtn" type="button"><span>📚 Biblioteca de Referências</span></button>
         <button id="modelsBtn" type="button"><span>🧩 Modelos</span></button>
@@ -220,45 +216,33 @@ app.innerHTML = `
         <button id="answerKeyBtn" type="button"><span>✓ Gabarito</span></button>
         <button id="historyBtn" type="button"><span>🕘 Histórico</span></button>
       </nav>
-      <div class="ribbon">
-        <div class="ribbon-tabs">
-          <button data-ribbon="file" type="button">Arquivo</button><button data-ribbon="home" class="active" type="button">Início</button>
-          <button data-ribbon="insert" type="button">Inserir</button>
-          <button data-ribbon="layout" type="button">Layout</button>
-          <button data-ribbon="organize" type="button">Organizar</button>
-          <div class="top-actions"><button class="btn ghost" id="previewBtn" type="button">Visualizar</button><button class="btn primary" id="pdfMenuBtn" type="button">Gerar PDF ▾</button><button class="btn" id="shareBtn" type="button">Compartilhar</button></div>
-        </div>
-        <div class="ribbon-panels">
-          <section class="ribbon-panel" data-panel="file"><div class="tool-group"><small>Documento</small><div><button id="fileNew">Novo</button><button id="fileOpen">Abrir</button><button id="fileSave">Salvar</button><button id="fileSaveAs">Salvar como</button><button id="fileRename">Renomear</button></div></div></section>
-          <section class="ribbon-panel active" data-panel="home">
-            <div class="tool-group"><small>Fonte</small><div><select id="fontName"><option>Arial</option><option>Calibri</option><option>Times New Roman</option><option>Georgia</option><option>Verdana</option></select><select id="fontSize"><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">18</option><option value="6">24</option></select></div></div>
-            <div class="tool-group"><small>Estilo</small><div><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button data-cmd="strikeThrough"><s>S</s></button></div></div>
-            <div class="tool-group"><small>Parágrafo</small><div><button data-cmd="justifyLeft">≡←</button><button data-cmd="justifyCenter">≡</button><button data-cmd="justifyRight">→≡</button><button data-cmd="justifyFull">☰</button><button data-cmd="insertUnorderedList">• Lista</button><button data-cmd="insertOrderedList">1. Lista</button><select id="lineHeight" title="Espaçamento entre linhas"><option value="0.5">0,5</option><option value="0.6">0,6</option><option value="0.7">0,7</option><option value="0.8">0,8</option><option value="0.9">0,9</option><option value="1" selected>1</option><option value="1.15">1,15</option><option value="1.5">1,5</option><option value="2">2</option><option value="custom">Personalizado</option></select><button id="paragraphSpacing">Antes/depois</button><button id="zeroSpacing">Sem espaço</button></div></div>
-            <div class="tool-group"><small>Ações</small><div><button data-cmd="undo">↶</button><button data-cmd="redo">↷</button><button id="resetFormat">Arial 12</button></div></div>
-          </section>
-          <section class="ribbon-panel" data-panel="insert">
+    <div class="header-controls"><span id="saveStatus" class="status saved">Salvo localmente</span>
+    <button class="btn" id="toggleSidebar" type="button">☰ Painel</button></div>
+  </header>
+      <div class="ribbon"><div class="ribbon-tabs"><div class="edit-menu-group" aria-label="Ferramentas de edição"><div class="edit-menu"><button data-ribbon="file" type="button" aria-expanded="false" aria-controls="drop-file">Arquivo <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-file" class="ribbon-panel" data-panel="file" aria-label="Arquivo" hidden><div class="tool-group"><small>Documento</small><div><button id="fileNew">Novo</button><button id="fileOpen">Abrir</button><button id="fileSave">Salvar</button><button id="fileSaveAs">Salvar como</button><button id="fileRename">Renomear</button></div></div></section></div><div class="edit-menu"><button data-ribbon="home" type="button" aria-expanded="false" aria-controls="drop-home">Início <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-home" class="ribbon-panel" data-panel="home" aria-label="Início" hidden>
+            <div class="tool-group"><small>Fonte</small><div><label class="dropdown-field">Tipo de fonte<select id="fontName"><option>Arial</option><option>Calibri</option><option>Times New Roman</option><option>Georgia</option><option>Verdana</option></select></label><label class="dropdown-field">Tamanho (pt)<select id="fontSize"><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">18</option><option value="6">24</option></select></label></div></div>
+            <div class="tool-group"><small>Estilo</small><div><button data-cmd="bold">Negrito</button><button data-cmd="italic">Itálico</button><button data-cmd="underline">Sublinhado</button><button data-cmd="strikeThrough">Tachado</button></div></div>
+            <div class="tool-group"><small>Parágrafo</small><div><button data-cmd="justifyLeft">Alinhar à esquerda</button><button data-cmd="justifyCenter">Centralizar</button><button data-cmd="justifyRight">Alinhar à direita</button><button data-cmd="justifyFull">Justificar</button><button data-cmd="insertUnorderedList">Lista com marcadores</button><button data-cmd="insertOrderedList">Lista numerada</button><label class="dropdown-field">Entrelinha<select id="lineHeight" title="Espaçamento entre linhas"><option value="0.5">0,5</option><option value="0.6">0,6</option><option value="0.7">0,7</option><option value="0.8">0,8</option><option value="0.9">0,9</option><option value="1" selected>1</option><option value="1.15">1,15</option><option value="1.5">1,5</option><option value="2">2</option><option value="custom">Personalizado</option></select></label><button id="paragraphSpacing">Espaço antes/depois</button><button id="zeroSpacing">Remover espaço entre parágrafos</button></div></div>
+            <div class="tool-group"><small>Ações</small><div><button data-cmd="undo">Desfazer</button><button data-cmd="redo">Refazer</button><button id="resetFormat">Restaurar padrão Arial 12</button></div></div>
+          </section></div><div class="edit-menu"><button data-ribbon="insert" type="button" aria-expanded="false" aria-controls="drop-insert">Inserir <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-insert" class="ribbon-panel" data-panel="insert" aria-label="Inserir" hidden>
             <div class="tool-group"><small>Elementos</small><div><button id="insertImageBtn">🖼 Imagem</button><input id="editorImageInput" type="file" accept="image/*" hidden /><button id="insertTextboxBtn">▣ Caixa de texto</button><button id="insertAnswerLinesBtn">≣ Linhas de resposta</button><button id="insertTableBtn">▦ Tabela ▾</button><button id="editTableBtn">Editar tabela</button><button id="imageAdjustBtn">Editar imagem</button></div></div>
-            <div class="tool-group"><small>Páginas</small><div><button id="addPageBtn">＋ Página</button><button id="duplicatePageBtn">⧉ Duplicar página</button><button id="deletePageBtn">🗑 Página</button></div></div>
-          </section>
-          <section class="ribbon-panel" data-panel="layout"><div class="tool-group"><small>Margens (mm)</small>      <div class="margin-grid">
+            <div class="tool-group"><small>Páginas</small><div><button id="addPageBtn">＋ Adicionar página</button><button id="duplicatePageBtn">⧉ Duplicar página</button><button id="deletePageBtn">🗑 Excluir página</button></div></div>
+          </section></div><div class="edit-menu"><button data-ribbon="layout" type="button" aria-expanded="false" aria-controls="drop-layout">Layout <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-layout" class="ribbon-panel" data-panel="layout" aria-label="Layout" hidden><div class="tool-group"><small>Margens (mm)</small>      <div class="margin-grid">
         <label>Sup.<input id="marginTop" type="number" min="5" max="35" step="1" /></label>
         <label>Dir.<input id="marginRight" type="number" min="5" max="35" step="1" /></label>
         <label>Inf.<input id="marginBottom" type="number" min="5" max="35" step="1" /></label>
         <label>Esq.<input id="marginLeft" type="number" min="5" max="35" step="1" /></label>
       </div>
 
-</div><div class="tool-group"><small>Exibição</small><div><button id="toggleRuler">Régua</button></div></div>
+</div><div class="tool-group"><small>Exibição</small><div><button id="toggleRuler">Mostrar / ocultar régua</button></div></div>
             <div class="tool-group"><small>Orientação da página ativa</small><div><button id="portraitBtn">▯ Retrato</button><button id="landscapeBtn">▭ Paisagem</button></div></div>
             <div class="tool-group"><small>Aplicar a todas</small><div><button id="allPortraitBtn">Todas retrato</button><button id="allLandscapeBtn">Todas paisagem</button></div></div>
             <div class="tool-group"><small>Colunas da página</small><div><button data-page-cols="1">1 coluna</button><button data-page-cols="2">2 colunas</button><button data-page-cols="3">3 colunas</button></div></div>
             <div class="tool-group"><small>Colunas na seleção</small><div><button data-selection-cols="2">Seleção 2 col.</button><button data-selection-cols="3">Seleção 3 col.</button></div></div>
-          </section>
-          <section class="ribbon-panel" data-panel="organize">
+          </section></div><div class="edit-menu"><button data-ribbon="organize" type="button" aria-expanded="false" aria-controls="drop-organize">Organizar <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-organize" class="ribbon-panel" data-panel="organize" aria-label="Organizar" hidden>
             <div class="tool-group"><small>Ordenar seleção</small><div><button id="sortAzBtn">A → Z</button><button id="sortZaBtn">Z → A</button><button id="sortNumericBtn">1 → 9</button></div></div>
             <div class="tool-group"><small>Objetos</small><div><button id="bringFrontBtn">Trazer à frente</button><button id="deleteObjectBtn">Excluir objeto</button></div></div>
-          </section>
-        </div>
-      </div>
+          </section></div></div><div class="top-actions"><button class="btn ghost" id="previewBtn" type="button">Visualizar</button><button class="btn primary" id="pdfMenuBtn" type="button">Gerar PDF ▾</button><button class="btn" id="shareBtn" type="button">Compartilhar</button></div></div></div>
 
   </div>
   <div class="workspace">
@@ -394,7 +378,7 @@ const renderFloatingObjects = (pageEl: HTMLElement, pageId: string) => {
 const headerHtml = () => {
   const labels = profileLabels();
   return `<div class="school-head"><img class="logo" src="${activity.logoDataUrl || defaultSchoolLogo}" alt="Logo da escola"><div class="school-name editable-header" data-header="school" contenteditable="true">${escapeHtml(activity.school)}</div><div class="header-title editable-header" data-header="title" contenteditable="true">${escapeHtml(activity.title)}</div></div>
-  <div class="meta"><div><strong>${labels.teacher}</strong> <span class="editable-header" data-header="teacher" contenteditable="true">${escapeHtml(activity.teacher)}</span></div><div><strong>${labels.grade}</strong> <span class="editable-header" data-header="grade" contenteditable="true">${escapeHtml(activity.grade)}</span></div><div><strong>${labels.subject}</strong> <span class="editable-header" data-header="subject" contenteditable="true">${escapeHtml(activity.subject)}</span></div><div class="full student-row"><strong>${labels.student}</strong> <span class="student-line"></span></div></div>`;
+  <div class="meta"><div class="full teacher-row"><strong>${labels.teacher}</strong> <span class="editable-header" data-header="teacher" contenteditable="true">${escapeHtml(activity.teacher)}</span></div><div class="subject-row"><strong>${labels.subject}</strong> <span class="editable-header" data-header="subject" contenteditable="true">${escapeHtml(activity.subject)}</span></div><div class="grade-row"><strong>${labels.grade}</strong> <span class="editable-header" data-header="grade" contenteditable="true">${escapeHtml(activity.grade)}</span></div><div class="full student-row"><strong>${labels.student}</strong> <span class="student-line"></span></div></div>`;
 };
 
 const renderPages = () => {
@@ -520,7 +504,7 @@ function restoreRange(){const ed=activeEditor();if(!ed)return;const range=savedR
 document.addEventListener('selectionchange',()=>{captureRange();updateRulerHandles();});
 document.querySelectorAll<HTMLButtonElement>('.ribbon button').forEach(b=>b.addEventListener('pointerdown',e=>{captureRange();e.preventDefault();}));
 document.querySelectorAll<HTMLSelectElement>('.ribbon select').forEach(b=>b.addEventListener('pointerdown',captureRange));
-const execCmd = (cmd:string,value?:string) => {if(cmd==='undo'||cmd==='redo'){undoRedo(cmd==='redo');return;}const ed=activeEditor(); if(!ed)return;restoreRange();document.execCommand(cmd,false,value); const p=activePage(); if(p) p.html=ed.innerHTML;captureRange();scheduleSave();};
+const execCmd = (cmd:string,value?:string) => {if(cmd==='undo'||cmd==='redo'){undoRedo(cmd==='redo');return;}const ed=activeEditor(); if(!ed)return;restoreRange();lastEditKind='';document.execCommand(cmd,false,value); const p=activePage(); if(p) p.html=ed.innerHTML;captureRange();scheduleSave();};
 document.querySelectorAll<HTMLButtonElement>('[data-cmd]').forEach(btn=>btn.addEventListener('click',()=>execCmd(btn.dataset.cmd||'')));
 $<HTMLSelectElement>('fontName').addEventListener('change',e=>execCmd('fontName',(e.target as HTMLSelectElement).value));
 $<HTMLSelectElement>('fontSize').addEventListener('change',e=>execCmd('fontSize',(e.target as HTMLSelectElement).value));
@@ -593,8 +577,15 @@ const setOrientation=(orientation:Orientation,all=false)=>{(all?activity.pages:[
 $('portraitBtn').addEventListener('click',()=>setOrientation('portrait'));$('landscapeBtn').addEventListener('click',()=>setOrientation('landscape'));$('allPortraitBtn').addEventListener('click',()=>setOrientation('portrait',true));$('allLandscapeBtn').addEventListener('click',()=>setOrientation('landscape',true));
 
 // Faixa de opções estilo Word
-const setRibbon=(name:string)=>{activeRibbon=name;document.querySelectorAll<HTMLElement>('[data-ribbon]').forEach(b=>b.classList.toggle('active',b.dataset.ribbon===name));document.querySelectorAll<HTMLElement>('[data-panel]').forEach(p=>p.classList.toggle('active',p.dataset.panel===name));};
-document.querySelectorAll<HTMLButtonElement>('[data-ribbon]').forEach(btn=>btn.addEventListener('click',()=>setRibbon(btn.dataset.ribbon||'home')));
+// Menus suspensos: preservam seleção, não empurram o documento e fecham ao escolher uma ação.
+const positionDropdown=()=>{if(!activeRibbon)return;const panel=document.querySelector<HTMLElement>(`[data-panel="${activeRibbon}"]`);const trigger=document.querySelector<HTMLElement>(`[data-ribbon="${activeRibbon}"]`);if(!panel||!trigger)return;const r=trigger.getBoundingClientRect();const width=panel.offsetWidth;const left=Math.max(8,Math.min(innerWidth-width-8,r.left+r.width/2-width/2));panel.style.left=`${left-r.left}px`;panel.style.maxHeight=`${Math.max(120,innerHeight-r.bottom-12)}px`;};
+const setRibbon=(name:string)=>{activeRibbon=name;document.querySelectorAll<HTMLElement>('[data-ribbon]').forEach(b=>{const open=b.dataset.ribbon===name;b.classList.toggle('active',open);b.setAttribute('aria-expanded',String(open));});document.querySelectorAll<HTMLElement>('[data-panel]').forEach(p=>{const open=p.dataset.panel===name;p.classList.toggle('active',open);p.hidden=!open;});positionDropdown();};
+document.querySelectorAll<HTMLButtonElement>('[data-ribbon]').forEach(btn=>{btn.addEventListener('click',()=>setRibbon(activeRibbon===btn.dataset.ribbon?'':btn.dataset.ribbon||''));btn.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();setRibbon(btn.dataset.ribbon||'');btn.parentElement?.querySelector<HTMLElement>('.ribbon-panel button,.ribbon-panel select,.ribbon-panel input:not([hidden])')?.focus();}});});
+document.querySelectorAll<HTMLElement>('.ribbon-panel').forEach(panel=>{panel.addEventListener('click',e=>{if((e.target as Element).closest('button'))setRibbon('');});panel.addEventListener('change',e=>{if((e.target as Element).matches('select'))setRibbon('');});panel.querySelectorAll('input').forEach(el=>el.addEventListener('pointerdown',captureRange));});
+document.addEventListener('pointerdown',e=>{if(activeRibbon&&!(e.target as Element).closest('.edit-menu'))setRibbon('');});
+document.addEventListener('keydown',e=>{if(activeRibbon&&e.key==='Escape'){const trigger=document.querySelector<HTMLElement>(`[data-ribbon="${activeRibbon}"]`);setRibbon('');trigger?.focus({preventScroll:true});e.preventDefault();}});
+window.addEventListener('resize',positionDropdown);
+
 
 // Régua
 const rulerTicks=$<HTMLDivElement>('rulerTicks');let rulerWidth=0;
