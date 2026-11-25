@@ -1,0 +1,12 @@
+MARKS CLASS STUDIO — V7.2
+Base V7.1. Substituir somente:
+
+RAIZ
+package.json
+README.md
+
+src/
+main.ts
+style.css
+
+Nenhuma pasta nova; as funções Netlify permanecem iguais.

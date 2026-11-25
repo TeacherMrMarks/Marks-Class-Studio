@@ -1,6 +1,19 @@
-# Marks Class Studio — V7
+# Marks Class Studio — V7.2
 
 Plataforma de uso individual do professor (sem autenticação nesta versão) para criar, importar, editar, organizar e exportar atividades pedagógicas de **Língua Inglesa** e **Projeto de Vida**.
+
+## Novidades da V7.2 (base V7.1)
+
+- Marca, nome e identificação da versão ancorados no canto superior esquerdo. Menu geral centralizado no espaço disponível e controles de sincronização/painel à direita; em telas estreitas, menu geral na linha seguinte.
+- No cabeçalho padrão das duas disciplinas, professor na primeira linha; disciplina à esquerda e turma alinhada à margem direita na segunda linha. A linha do aluno mantém toda a largura útil. Cabeçalhos importados em modo de preservação permanecem inalterados.
+- Nenhuma alteração no armazenamento ou nas funções Netlify.
+
+## Novidades da V7.1 (base V7)
+
+- Menu geral centralizado ao lado da marca, com divisórias e adaptação a telas menores.
+- Menus de edição centralizados, com listas verticais suspensas; fecham ao escolher uma ação ou clicar fora. Os campos de margem permanecem disponíveis enquanto são ajustados.
+- Correção pontual do histórico para que uma formatação não seja agrupada com a digitação anterior.
+- Nenhuma alteração de armazenamento ou funções Netlify.
 
 ## Novidades da V7 (base V6.1)
 
