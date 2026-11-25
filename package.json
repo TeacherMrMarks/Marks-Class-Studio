@@ -1,7 +1,7 @@
 {
   "name": "marks-class-studio",
   "private": true,
-  "version": "7.2.0",
+  "version": "8.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,8 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.3",
     "mammoth": "^1.9.1",
-    "pdfjs-dist": "^4.10.38"
+    "pdfjs-dist": "^4.10.38",
+    "@netlify/identity": "2.0.1"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

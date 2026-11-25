@@ -113,3 +113,38 @@ Validação V6: TypeScript 5.8.3 (tsc --noEmit), testes Chromium dos controles, 
 
 ### V6.1
 Linha do aluno até a margem direita do cabeçalho, régua alinhada à folha ativa e à rolagem horizontal, com escala em centímetros e marcadores de recuo. Mantida a base V6.
+
+## V7.3 — Colagem inteligente e histórico rápido
+
+- Ctrl+V na folha: Arial 12, justificado, entrelinha 1,0 e zero antes/depois; mantém destaques semânticos, listas, tabelas e imagens quando o clipboard fornece HTML compatível. Texto sem formatação não contém informações sobre negrito ou itálico. Imagens copiadas isoladamente continuam como objetos móveis.
+- Início → Colar: inteligente, original ou somente texto. Se o navegador não liberar a leitura pelo botão, use Ctrl+V após escolher o modo.
+- Desfazer e Refazer sempre visíveis na barra de edição; Ctrl+Z e Ctrl+R, também Ctrl+Y e Ctrl+Shift+Z. Fora de campos de formulário e diálogos, Ctrl+R é capturado para refazer em vez de atualizar a página. O navegador pode reservar esse atalho em algumas plataformas.
+- Sem alteração dos serviços Netlify ou das chaves de armazenamento.
+
+## V8 — editor compacto, modelos pedagógicos, backup e conta privada
+
+Base: V7.3. As chaves de dados e os nomes dos stores de atividades/imagens foram mantidos. A edição usa a mesma estrutura de documentos, imagens, régua, tabelas, colagem inteligente e PDF. O navegador migra os registros existentes para cache compatível e usa IndexedDB como camada adicional para dados grandes. O salvamento é local a cada edição, com sincronização remota em fila; a escrita no IndexedDB é assíncrona. Mantenha a página aberta quando houver indicação de sincronização pendente ou falha. Os documentos também são recuperados da nuvem ao iniciar, sem sobrescrever uma edição local pendente.
+
+- **Documento**, no canto superior direito: abre somente sob demanda o painel de cabeçalho, escola, professor, componente, turma, título, logos e rodapé. Fecha sem ocupar uma coluna fixa. Importação agora em Arquivo → Importar PDF / Word.
+- **Pedagógico**: 11 modelos de Inglês (Reading, Listening com roteiro para leitura do professor, lacunas, associação, questões objetivas, escrita, imagens, verdadeiro/falso, ordenar frases, recortar/colar, caça-palavras de exemplo) e 12 de Projeto de Vida. Escolha a série 1ª/2ª/3ª EMTI ou EM. Cada modelo cria uma atividade nova, editável, com exemplos e gabarito quando aplicável. As imagens dos modelos que as pedem são espaços reservados; insira a imagem de sua escolha. O caça-palavras é um exemplo editável, não o gerador automático. Não há módulo de áudio.
+- **Pedagógico → Formatar documento automaticamente**: normaliza textos em Arial 12, justificado, entrelinha 1,0 e zero antes/depois, preservando destaques, tabelas, objetos e colunas. Revise títulos, quebras de página e conteúdo ao finalizar.
+- O gabarito digitado também é salvo automaticamente. Modelos, histórico e preferências de régua/importação são sincronizados por registros auxiliares; a interface de histórico mostra os 35 registros locais mais recentes. O banco de imagens e os documentos são retomados quando a conexão voltar. Evite editar o mesmo documento simultaneamente em dois aparelhos: não é edição colaborativa.
+
+### Configurar o acesso ANTES de publicar a V8
+
+1. No painel do seu site no Netlify, abra Identity, habilite o serviço e configure Registration → Invite only. Convide somente seu e-mail em Users (se já existir, use a conta existente).
+2. Em Project configuration → Environment variables, adicione `MCS_OWNER_EMAIL` com seu e-mail de Identity, exatamente o que foi convidado. Disponibilize a variável às Functions, inclusive no ambiente do deploy desejado. A falta da variável bloqueia o acesso por segurança. Não coloque senha nem essa configuração no código público. A chave `OPENAI_API_KEY`, se usada, continua no Netlify.
+3. Suba todos os arquivos V8, inclusive index.html, arquivos novos de src, as funções atualizadas e `netlify/shared/auth.mts`. Publique apenas quando todos estiverem no repositório (idealmente um commit completo). A autenticação passa a proteger as funções de documentos, imagens e IA, além da tela. Não deixe a versão pública anterior publicada em URLs acessíveis caso contenha dados sensíveis; revogue deploys antigos quando possível.
+4. Abra o link de convite recebido por e-mail e defina a senha. A tela também tem Esqueci minha senha. Para alterar a senha estando conectado, clique na engrenagem → Alterar minha senha e informe a senha atual, a nova e a confirmação.
+
+A V8 usa o SDK oficial `@netlify/identity` 2.0.1 (https://docs.netlify.com/manage/security/secure-access-to-sites/identity/get-started/). O formulário de senha nova aceita de 6 a 12 caracteres; prefira 12. Não foi adotada a senha de quatro dígitos por segurança e compatibilidade. O serviço pode impor requisitos adicionais. Nenhuma senha é salva no arquivo de backup. O login real, recuperação por e-mail e alterações de senha requerem o Identity habilitado em um deploy. A proteção remota não criptografa o cache já gravado no perfil do navegador; evite computadores compartilhados. Ao sair, a aplicação tenta sincronizar antes de encerrar a sessão.
+
+### Backup
+
+Na engrenagem no canto superior direito → **Exportar backup completo**. Um arquivo JSON datado reúne rascunho, atividades, referências, objetos/imagens inseridos, logos, gabaritos, banco de imagens, modelos, histórico disponível e preferências. A plataforma consulta a nuvem e combina com os dados locais; se a nuvem estiver indisponível, oferece explicitamente backup somente local, que não deve ser confundido com o completo. Não inclui a senha, sessão, chaves de API, nem os PDFs/DOCX originais que não foram armazenados pela biblioteca anterior (inclui o documento reconstruído e editável).
+
+Para recuperar: engrenagem → Importar backup, selecione o JSON e confirme. A restauração mescla os acervos por ID, preserva itens que já existiam e prefere a atividade mais recente em caso de conflito; não limpa o acervo atual. Importe apenas backups que você gerou e mantenha uma cópia separada. O editor valida a estrutura e higieniza HTML ao importar. A sincronização ocorre em fila; arquivos muito grandes podem exceder os limites das Functions/armazenamento do navegador, e exigem revisão do status. Para backup completo é necessário acesso à nuvem. O JSON contém seu material: guarde-o em local privado.
+
+### Validação V8
+
+Validação local com TypeScript 5.8.3 e uma declaração de teste temporária para o SDK Identity (não incluída no projeto); Chromium com serviços e autenticação simulados para painel, modelos, gabarito automático, tela de alteração de senha, exportação/restauração de backup e tela estreita. A instalação das dependências não foi possível neste ambiente (rede DNS indisponível). Portanto, ainda é necessário confirmar o build real, a API Identity, a sincronização de Blobs e a recuperação por e-mail no Netlify. A geração por IA continua dependendo de `OPENAI_API_KEY`. A infraestrutura nova não substitui os testes de importação PDF/Word com seus arquivos reais.

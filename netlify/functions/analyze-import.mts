@@ -1,7 +1,9 @@
+import { authorize } from '../shared/auth.mjs';
 type PageIn={orientation?:string;columns?:number;text?:string;html?:string};
 const extractText=(json:any)=>{if(typeof json?.output_text==='string')return json.output_text;const out:string[]=[];for(const item of json?.output||[])for(const c of item?.content||[])if(typeof c?.text==='string')out.push(c.text);return out.join('\n');};
 const parse=(s:string)=>JSON.parse(s.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,''));
-export default async(req:Request)=>{
+const handler = async (req: Request) => {
+  const denied=await authorize(req);if(denied)return denied;
   if(req.method!=='POST')return new Response('Method not allowed',{status:405});
   const apiKey=process.env.OPENAI_API_KEY;if(!apiKey)return Response.json({ok:false,error:'IA não configurada.'},{status:503});
   try{
@@ -12,3 +14,5 @@ export default async(req:Request)=>{
     const model=process.env.OPENAI_MODEL||'gpt-4.1-mini';const r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,instructions,input})});const json=await r.json();if(!r.ok)return Response.json({ok:false,error:json?.error?.message||'Falha na API.'},{status:r.status});const parsed=parse(extractText(json));if(!Array.isArray(parsed?.pages))throw new Error('Formato inesperado.');return Response.json({ok:true,pages:parsed.pages});
   }catch(error){return Response.json({ok:false,error:error instanceof Error?error.message:String(error)},{status:500});}
 };
+
+export default async (req:Request)=>{const response=await handler(req);response.headers.set('Cache-Control','private, no-store');return response;};

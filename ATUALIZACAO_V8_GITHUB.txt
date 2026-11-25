@@ -1,0 +1,41 @@
+MARKS CLASS STUDIO — V8
+
+IMPORTANTE ANTES DO DEPLOY: habilite Identity no Netlify, selecione Invite only,
+convide seu e-mail e configure MCS_OWNER_EMAIL (mesmo e-mail) nas variáveis
+com acesso às Functions. A plataforma fica bloqueada até esta configuração.
+Leia README.md, seção V8. Prefira um commit com todos os arquivos.
+
+RAIZ — substituir:
+  index.html
+  package.json
+  README.md
+
+src/ — substituir:
+  main.ts
+  style.css
+src/ — novos arquivos:
+  entry.ts
+  auth.ts
+  storage.ts
+  pedagogical.ts
+
+netlify/functions/ — substituir TODOS os dez anteriores:
+  analyze-import.mts
+  assist-selection.mts
+  delete-activity.mts
+  delete-image.mts
+  generate-activity.mts
+  list-activities.mts
+  list-images.mts
+  load-activity.mts
+  save-activity.mts
+  save-image.mts
+netlify/functions/ — adicionar:
+  account.mts
+  aux-data.mts
+
+netlify/shared/ — NOVA PASTA E ARQUIVO:
+  auth.mts
+
+O restante é idêntico à V7.3. Se atualizar tudo pelo ZIP, mantenha a raiz do
+projeto na raiz do repositório. Não inclua a pasta externa do ZIP.

@@ -47,3 +47,11 @@
  .top-chrome .header-controls{grid-column:2;grid-row:1}
  .top-chrome .top-library-menu{grid-column:1/-1;grid-row:2;justify-self:stretch}
 }
+
+/* V7.3 — ações rápidas sempre disponíveis sem abrir o menu Início. */
+.top-chrome .quick-history{grid-column:1;grid-row:1;justify-self:start;display:flex;align-items:center;gap:5px;white-space:nowrap}.top-chrome .quick-history button{min-height:30px;padding:4px 8px;border:1px solid #39526e;border-radius:6px;background:#14283d;color:#e8f0f7;font-size:12px}.top-chrome .quick-history button span{font-size:17px;line-height:1;vertical-align:-1px;color:#a9ded7}.top-chrome .quick-history button:hover{background:#24405b;border-color:var(--gold)}.top-chrome .quick-history button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+@media (min-width:761px) and (max-width:1280px){.top-chrome .ribbon-tabs{grid-template-columns:auto 1fr auto;gap:5px}.top-chrome .edit-menu-group{grid-column:2}.top-chrome .top-actions{grid-column:3}}
+@media(max-width:760px){.top-chrome .quick-history{justify-content:center}.top-chrome .quick-history button{font-size:11px;padding:4px 6px}}
+/* V8: documento livre, configurações acessíveis somente sob demanda. */
+.workspace{display:block!important;grid-template-columns:none!important}.workspace .sidebar[hidden],#documentDrawer [hidden]{display:none!important}.workspace .sidebar{position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(350px,94vw);max-height:100dvh;overflow:auto;background:#101d2d;border-left:1px solid #3a536c;box-shadow:-12px 0 36px #0007;padding:16px}.workspace .sidebar .sidebar-title{position:sticky;top:0;background:#101d2d;padding:6px 0;z-index:1}.workspace .sidebar #newActivityBtn{display:none}.top-chrome #globalSettingsBtn{font-size:17px;padding:4px 8px;line-height:1}.auth-screen{min-height:100dvh;display:grid;place-items:center;padding:20px}.auth-card{width:min(100%,390px);background:#14263a;border:1px solid #35516c;border-radius:14px;padding:25px;box-shadow:0 20px 70px #0005}.auth-card h2{margin:24px 0 8px}.auth-card .ai-form{padding:0;margin:12px 0}.auth-card #authStatus{min-height:20px;color:#f0cb80;font-size:13px}.auth-card small{color:#b1c5d8}.auth-card .btn{width:100%;margin-top:8px}.top-chrome .ribbon-panel{max-height:min(65vh,560px)}
+@media print{.workspace .sidebar{display:none!important}}

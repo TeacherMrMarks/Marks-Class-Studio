@@ -1,6 +1,8 @@
+import { authorize } from '../shared/auth.mjs';
 import { getStore } from '@netlify/blobs';
 
-export default async (req: Request) => {
+const handler = async (req: Request) => {
+  const denied=await authorize(req);if(denied)return denied;
   const url = new URL(req.url);
   const id = url.searchParams.get('id');
   if (!id) return Response.json({ ok: false, error: 'id obrigatório' }, { status: 400 });
@@ -13,3 +15,5 @@ export default async (req: Request) => {
     return Response.json({ ok: false, error: String(error) }, { status: 500 });
   }
 };
+
+export default async (req:Request)=>{const response=await handler(req);response.headers.set('Cache-Control','private, no-store');return response;};

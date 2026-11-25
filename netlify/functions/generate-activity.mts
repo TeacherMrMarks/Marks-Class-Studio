@@ -1,3 +1,4 @@
+import { authorize } from '../shared/auth.mjs';
 type Reference = { title?: string; grade?: string; text?: string; pageCount?: number; orientations?: string[]; columns?: number[] };
 type RequestBody = {
   component?: 'english' | 'life-project'; grade?: string; topic?: string; questionCount?: number; questionType?: string; notes?: string;
@@ -6,7 +7,8 @@ type RequestBody = {
 };
 const extractText=(json:any)=>{if(typeof json?.output_text==='string')return json.output_text;const chunks:string[]=[];for(const item of json?.output||[])for(const c of item?.content||[])if(typeof c?.text==='string')chunks.push(c.text);return chunks.join('\n');};
 const parseJsonText=(text:string)=>JSON.parse(text.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,''));
-export default async(req:Request)=>{
+const handler = async (req: Request) => {
+  const denied=await authorize(req);if(denied)return denied;
   if(req.method!=='POST')return new Response('Method not allowed',{status:405});
   const apiKey=process.env.OPENAI_API_KEY;if(!apiKey)return Response.json({ok:false,error:'IA não configurada. Adicione OPENAI_API_KEY no Netlify e faça um novo deploy.'},{status:503});
   try{
@@ -26,3 +28,5 @@ export default async(req:Request)=>{
     return Response.json({ok:true,title:String(parsed.title||''),pages:parsed.pages,answerKeyHtml:includeKey?String(parsed.answerKeyHtml||''):''});
   }catch(error){return Response.json({ok:false,error:error instanceof Error?error.message:String(error)},{status:500});}
 };
+
+export default async (req:Request)=>{const response=await handler(req);response.headers.set('Cache-Control','private, no-store');return response;};
