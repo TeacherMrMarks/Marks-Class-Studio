@@ -1,0 +1,16 @@
+MARKS CLASS STUDIO — V7
+Base V6.1. Substituir apenas os arquivos abaixo, se a V6.1 já estiver publicada:
+
+RAIZ
+package.json
+README.md
+
+src/
+main.ts
+style.css
+
+netlify/functions/
+assist-selection.mts
+
+Nenhuma pasta nova. O ZIP inclui o projeto completo.
+O editor de imagens funciona sem IA. Os comandos inteligentes exigem OPENAI_API_KEY no Netlify.

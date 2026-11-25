@@ -1,6 +1,15 @@
-# Marks Class Studio — V4
+# Marks Class Studio — V7
 
-Plataforma privada do professor para criar, importar, editar, organizar e exportar atividades pedagógicas de **Língua Inglesa** e **Projeto de Vida**.
+Plataforma de uso individual do professor (sem autenticação nesta versão) para criar, importar, editar, organizar e exportar atividades pedagógicas de **Língua Inglesa** e **Projeto de Vida**.
+
+## Novidades da V7 (base V6.1)
+
+- Menu geral acima dos menus de edição, ambos compactos e fixos durante a rolagem. Ações Visualizar, Gerar PDF e Compartilhar à direita das abas de edição. Em telas estreitas, as faixas têm rolagem horizontal.
+- Um único menu IA e um único menu Modelos. Os comandos de criação, seleção, adaptação, gabarito e reconstrução ficam reunidos em IA. A reconstrução abre o importador em modo adaptar com IA. Salvar layout atual fica dentro de Modelos.
+- Arquivo > Salvar abre um diálogo para nome, componente e série na primeira confirmação; os autosaves continuam ativos e a atividade continua armazenada em Minhas Atividades. Salvar como cria um novo ID, preservando o original. Renomear altera o nome no acervo sem modificar o cabeçalho impresso.
+- Para editar uma imagem flutuante, selecione-a e clique na tesoura (ou Inserir > Editar imagem). Arraste as oito alças ou informe percentuais de recorte; gire em 90°, ajuste brilho, contraste e escala de cinza. Aplique, cancele ou restaure o original. Os ajustes são armazenados com a atividade e integrados ao desfazer/refazer. O raster editado é limitado a 2400 pixels no maior lado; o arquivo original permanece guardado. Imagens grandes podem pressionar o limite de armazenamento local do navegador.
+- O recorte nesta versão atua nas imagens flutuantes inseridas na folha, não nas imagens HTML internas de um DOCX importado nem nas logomarcas do cabeçalho/rodapé.
+- Chave de IA ainda necessária no Netlify. Não há autenticação nesta versão. Não armazene dados pessoais de alunos em uma implantação pública sem proteção de acesso.
 
 ## O que mudou na V4
 
@@ -33,7 +42,7 @@ Opcionalmente, você pode definir:
 
 `OPENAI_MODEL`
 
-Se `OPENAI_MODEL` não existir, a função usa `gpt-6-luna`.
+Se `OPENAI_MODEL` não existir, a função usa `gpt-4.1-mini`.
 
 Depois de alterar variáveis no Netlify, faça um novo deploy.
 
@@ -78,3 +87,16 @@ A atividade é salva localmente de forma automática e sincronizada com Netlify 
 `tsc --noEmit` e testes dos controles em Chromium com serviços simulados. Não
 foi validado o build Vite completo nem o funcionamento real das dependências de
 PDF/DOCX, API de IA e Netlify Blobs neste ambiente. Veja ATUALIZACAO_V5_GITHUB.txt.
+
+## V6 — melhorias sobre a V5.1
+
+- Acervos e ferramentas transferidos para menu horizontal superior.
+- Configurações e importação recolhíveis, com estado lembrado no navegador.
+- Tabelas: clique dentro da tabela para ver as alças. Arraste o canto inferior direito para alterar largura e altura proporcionalmente às colunas/linhas; arraste as divisórias verticais/horizontais para ajustar dimensões individuais. As alças não entram no PDF. O conteúdo e as margens limitam o tamanho mínimo/máximo. Em tabelas com células mescladas, use Editar tabela para ajustes individuais de colunas; o arraste de divisórias verticais exige células regulares.
+- Importação com opção de padronização ativa por padrão: Arial 12 pt, texto justificado, entrelinha 1,0 e 3 pt depois de parágrafos comuns; listas e alternativas compactas. Títulos identificados permanecem destacados. Desmarque a opção para tentar preservar os estilos extraídos. A extração de PDF agrupa linhas em parágrafos com heurísticas, sem exigir IA.
+- Mantida a correção da V5.1 para Uint8Array/Blob e as chaves de armazenamento.
+
+Validação V6: TypeScript 5.8.3 (tsc --noEmit), testes Chromium dos controles, arraste de tabela/divisórias, desfazer/refazer e formatação com dados de PDF/DOCX simulados. Build Vite, dependências reais e deploy Netlify ainda não validados. PDFs complexos, especialmente tabelas, imagens e digitalizações, e DOCX com paginação complexa exigem revisão.
+
+### V6.1
+Linha do aluno até a margem direita do cabeçalho, régua alinhada à folha ativa e à rolagem horizontal, com escala em centímetros e marcadores de recuo. Mantida a base V6.
