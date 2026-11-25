@@ -1,0 +1,68 @@
+MARKS CLASS STUDIO — ATUALIZAÇÃO V4
+===================================
+
+A V4 parte diretamente da V3.
+
+NO GITHUB, SUBSTITUA ESTES ARQUIVOS:
+
+RAIZ:
+- package.json
+- README.md
+- index.html
+- netlify.toml
+- tsconfig.json
+- vite.config.ts
+
+PASTA src:
+- main.ts
+- style.css
+- vendor.d.ts
+- logo-ione-v3.png  (pode manter o mesmo da V3; o ZIP já traz a cópia correta)
+
+PASTA netlify/functions:
+- generate-activity.mts   (SUBSTITUIR a versão antiga)
+- save-activity.mts
+- load-activity.mts
+- list-activities.mts
+- delete-activity.mts
+- save-image.mts
+- list-images.mts
+- delete-image.mts
+
+NOVOS ARQUIVOS DA V4 dentro de netlify/functions:
+- analyze-import.mts
+- assist-selection.mts
+
+ESTRUTURA FINAL:
+Marks-Class-Studio/
+├── index.html
+├── package.json
+├── netlify.toml
+├── tsconfig.json
+├── vite.config.ts
+├── README.md
+├── src/
+│   ├── main.ts
+│   ├── style.css
+│   ├── vendor.d.ts
+│   └── logo-ione-v3.png
+└── netlify/
+    └── functions/
+        ├── analyze-import.mts
+        ├── assist-selection.mts
+        ├── generate-activity.mts
+        ├── save-activity.mts
+        ├── load-activity.mts
+        ├── list-activities.mts
+        ├── delete-activity.mts
+        ├── save-image.mts
+        ├── list-images.mts
+        └── delete-image.mts
+
+PARA ATIVAR A IA:
+Netlify > Site configuration / Project configuration > Environment variables
+Adicionar: OPENAI_API_KEY = sua chave da API
+Depois fazer novo deploy.
+
+OBSERVAÇÃO:
+A V4 migra automaticamente o rascunho, biblioteca, histórico e banco de imagens locais da V3 quando possível.
