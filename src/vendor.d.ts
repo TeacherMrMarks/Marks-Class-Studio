@@ -15,26 +15,24 @@ declare module 'jspdf' {
 declare module 'mammoth' {
   const mammoth: {
     convertToHtml(input: { arrayBuffer: ArrayBuffer }, options?: unknown): Promise<{ value: string; messages: Array<{ type: string; message: string }> }>;
-    images: {
-      imgElement(fn: (image: { contentType: string; read(type: 'base64'): Promise<string> }) => Promise<{ src: string }>): unknown;
-    };
+    images: { imgElement(fn: (image: { contentType: string; read(type: 'base64'): Promise<string> }) => Promise<{ src: string }>): unknown };
   };
   export default mammoth;
 }
 
 declare module 'pdfjs-dist' {
   export const GlobalWorkerOptions: { workerSrc: string };
-  export function getDocument(options: { data: Uint8Array }): {
-    promise: Promise<{
-      numPages: number;
-      getPage(pageNumber: number): Promise<{ getTextContent(): Promise<{ items: unknown[] }> }>;
-    }>;
-  };
+  export function getDocument(options: { data: Uint8Array }): { promise: Promise<{ numPages: number; getPage(pageNumber: number): Promise<{ getTextContent(): Promise<{ items: unknown[] }> }> }> };
 }
 
 declare module 'pdfjs-dist/build/pdf.worker.min.mjs?url' {
   const url: string;
   export default url;
+}
+
+declare module '*.png?inline' {
+  const dataUrl: string;
+  export default dataUrl;
 }
 
 declare module '@netlify/blobs' {
@@ -47,3 +45,5 @@ declare module '@netlify/blobs' {
   };
   export function getStore(name: string): Store;
 }
+
+declare const process: { env: Record<string, string | undefined> };

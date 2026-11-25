@@ -1,0 +1,33 @@
+MARKS CLASS STUDIO — ATUALIZAÇÃO V3
+
+Se você já tem a V2 no GitHub, substitua estes arquivos:
+
+RAIZ
+- README.md
+- index.html
+- package.json
+- netlify.toml
+- tsconfig.json
+- vite.config.ts
+
+PASTA src
+- main.ts
+- style.css
+- vendor.d.ts
+- logo-ione-v3.png   (NOVO)
+
+PASTA netlify/functions
+- save-activity.mts
+- load-activity.mts
+- list-activities.mts
+- delete-activity.mts
+- save-image.mts      (NOVO)
+- list-images.mts     (NOVO)
+- delete-image.mts    (NOVO)
+- generate-activity.mts (NOVO)
+
+IMPORTANTE
+1. A V3 migra automaticamente o rascunho, biblioteca e histórico locais da V2.
+2. Depois do commit, o Netlify deve iniciar um novo deploy automaticamente.
+3. Toda a plataforma funciona sem IA. Para ativar “Criar com IA”, configure OPENAI_API_KEY nas variáveis de ambiente do Netlify e faça novo deploy.
+4. OPENAI_MODEL é opcional; sem ele, a função usa gpt-6-luna.

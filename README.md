@@ -1,32 +1,57 @@
-# Marks Class Studio — V2
+# Marks Class Studio — V3
 
-Segunda versão funcional da plataforma de criação e edição de atividades pedagógicas.
+Plataforma pedagógica para criação, edição, organização e geração de atividades de **Língua Inglesa** e **Projeto de Vida**.
 
-## O que mudou na V2
-- Importação de PDF com extração de texto para a área editável.
-- Importação de DOCX com texto, formatação básica e imagens incorporadas.
-- O conteúdo importado abre imediatamente na folha A4.
-- Edição e prévia atualizadas em tempo real.
-- Biblioteca de atividades funcional: abrir, duplicar e excluir.
-- Sincronização das atividades com Netlify Blobs quando online.
-- Modelos funcionais: Atividade, Avaliação, Recuperação, Simulado e Pesquisa.
-- Histórico de versões com restauração.
-- Botão Nova atividade.
-- Inserção de imagens diretamente no editor.
-- Prévia em modal, impressão, PDF e compartilhamento.
-- Identidade atualizada para Marks Class Studio.
+## O que mudou na V3
 
-## Observações de importação
-- PDF: a V2 extrai o texto e o transforma em conteúdo editável. Imagens embutidas dentro do PDF ainda não são reconstruídas automaticamente como elementos independentes.
-- DOCX: imagens incorporadas são preservadas quando possível.
-- DOC antigo: converta para DOCX ou PDF antes de importar.
+- Migração automática dos dados locais da V2.
+- Cabeçalho baseado no padrão real da E.E. Ione Silveira Mendes.
+- Logo Ione V3 incluída como padrão e substituível.
+- Perfis separados: Língua Inglesa e Projeto de Vida.
+- Editor A4 em tempo real com Arial 12 e texto justificado.
+- Régua horizontal com margens esquerda/direita arrastáveis e controles das quatro margens.
+- Imagens flutuantes: inserir, mover, redimensionar, trazer para frente e excluir.
+- Caixas de texto flutuantes: mover, redimensionar, editar e mostrar/ocultar borda.
+- Arrastar imagem do computador para a folha e colar imagem da área de transferência.
+- Banco de imagens local + sincronização por Netlify Blobs.
+- Biblioteca com filtro por componente e busca.
+- Modelos próprios para Inglês e Projeto de Vida.
+- Histórico restaurável.
+- Importação PDF/DOCX para conteúdo editável.
+- Geração e compartilhamento de PDF.
+- Módulo “Criar com IA” preparado e funcional quando `OPENAI_API_KEY` estiver configurada no Netlify. A IA recebe referências da própria biblioteca do professor.
 
 ## Estrutura
-- Arquivos da raiz: README.md, index.html, netlify.toml, package.json, tsconfig.json, vite.config.ts
-- Pasta src: main.ts, style.css, vendor.d.ts
-- Pasta netlify/functions: save-activity.mts, load-activity.mts, list-activities.mts, delete-activity.mts
 
-## Deploy no Netlify
-Build command: `npm run build`
-Publish directory: `dist`
-Functions: `netlify/functions`
+```text
+src/
+  main.ts
+  style.css
+  vendor.d.ts
+  logo-ione-v3.png
+netlify/functions/
+  save-activity.mts
+  load-activity.mts
+  list-activities.mts
+  delete-activity.mts
+  save-image.mts
+  list-images.mts
+  delete-image.mts
+  generate-activity.mts
+index.html
+netlify.toml
+package.json
+tsconfig.json
+vite.config.ts
+```
+
+## IA (opcional nesta etapa)
+
+No painel do Netlify, configure a variável de ambiente `OPENAI_API_KEY`. Opcionalmente defina `OPENAI_MODEL`; se não for definida, o projeto usa `gpt-6-luna`. Depois faça um novo deploy. Sem a chave, todo o restante da plataforma continua funcionando e o módulo informa claramente que a IA não está configurada.
+
+## Build
+
+```bash
+npm install
+npm run build
+```
