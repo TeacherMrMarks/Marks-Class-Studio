@@ -1,0 +1,44 @@
+MARKS CLASS STUDIO — V5 | Atualização manual pelo Chromebook
+
+1. Faça uma cópia do repositório/branch V4 ou preserve o commit da versão estável.
+2. No MESMO repositório, substitua somente os arquivos indicados abaixo (mesmo caminho).
+   Não apague os dados no Netlify Blobs nem mude o endereço do site.
+
+RAIZ:
+  package.json
+  README.md
+  ATUALIZACAO_V5_GITHUB.txt (opcional, documentação)
+
+src/:
+  main.ts
+  style.css
+
+netlify/functions/:
+  analyze-import.mts
+  assist-selection.mts
+  generate-activity.mts
+
+Não há novas pastas ou dependências nesta versão. Os demais arquivos do ZIP são
+as cópias da V4 para permitir uma instalação completa. O netlify.toml continua
+igual. Faça commit dos arquivos e confirme o deploy mais recente. O topo deve
+mostrar V5. Se possível, teste em Deploy Preview antes de publicar em produção.
+
+Testes sugeridos:
+- Arquivo > Salvar como; abra Minhas Atividades e confirme a cópia.
+- Importe um arquivo escolhendo o destino Referências, e outro em Minhas Atividades.
+- Selecione um parágrafo e arraste a régua; confirme que o outro não se move.
+- Escolha espaçamento 0,7; use Sem espaço para remover margens de parágrafo.
+- Inserir > Tabela; teste 4 linhas x 5 colunas, e editar tabela dentro de uma célula.
+- Insira uma imagem, exclua pelo X e use Desfazer/Refazer.
+- Importe PDF de uma coluna e DOCX em paisagem; confira a prévia antes de exportar.
+
+IA: variável OPENAI_API_KEY no Netlify, e OPENAI_MODEL opcional (padrão gpt-4.1-mini).
+O acesso e a cobrança da API são independentes dos créditos Netlify.
+
+Limites: reprodução editável de PDF/DOCX é aproximada. PDF digitalizado sem texto
+é preservado como imagem, não OCR. DOCX com múltiplas seções usa a primeira
+orientação/colunas; elementos complexos e paginação exigem revisão. Importação
+com IA é opcional no modo Adaptar. O editor avisa sobre conteúdo excedente antes
+de exportar. Tabelas grandes podem exigir divisão manual entre páginas.
+A V4 não tem autenticação; a V5 mantém essa arquitetura. Não armazene dados
+pessoais de alunos ou documentos confidenciais em deploy público sem proteção.
