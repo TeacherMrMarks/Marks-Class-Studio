@@ -1,0 +1,37 @@
+MARKS CLASS STUDIO — V10 | atualização a partir da V9
+
+Antes de atualizar, faça um backup completo pela engrenagem, se possível.
+Não exclua seus dados nem crie outro repositório.
+
+SUBSTITUIR 7 ARQUIVOS:
+Raiz:
+  package.json
+  README.md
+src:
+  auth.ts
+  main.ts
+  style.css
+  question-bank.ts
+  reference-memory.ts
+
+ADICIONAR 1 ARQUIVO NOVO:
+src:
+  word-search.ts
+
+Nenhuma pasta nova. Os arquivos netlify/functions e netlify/shared da V9
+continuam intactos para manter login, dados, backup e extração de questões.
+Os antigos endpoints de IA não são chamados pela interface V10.
+
+No GitHub, abra a pasta correspondente e use Add file > Upload files.
+Substitua os arquivos de cada pasta em uma única operação sempre que possível.
+Após os commits, confirme que o deploy publicou V10.
+Não altere MCS_OWNER_EMAIL nem o Netlify Identity.
+
+PRIMEIRO TESTE:
+1. Abra uma atividade com linhas de resposta, compare Visualizar e PDF.
+2. Cole uma imagem, clique nela, redimensione pela alça inferior e recorte.
+3. Clique em uma tabela e arraste uma divisória horizontal.
+4. Banco de questões: procure uma questão, visualize A4 e insira.
+5. Gere um caça-palavras, confira o gabarito, salve e reabra.
+6. Compartilhe via WhatsApp. Em computador, anexe o PDF baixado manualmente.
+7. Exporte backup completo e confira a indicação de conclusão.
