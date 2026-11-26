@@ -1,3 +1,21 @@
+# Atualização V8.1 — Marks Class Studio
+
+Base: V8, sem mudança de autenticação.
+
+- Barra permanente de formatação acima da régua, menus e ações compactos; indicador de salvamento por símbolo e descrição.
+- Arial 12, justificado, entrelinha 1,15 em novos documentos, colagem inteligente, importação padronizada e IA. Modelos pedagógicos com linhas de resposta próprias.
+- Cabeçalhos (nome da escola e título): clique no campo e use a barra de formatação. A formatação se aplica ao campo inteiro.
+- Layout > Bordas da página: opcional, desligada em novos documentos, espessura 0,25–6 pt, cor, estilo, distância do texto e escopo. O limite de 5 mm da borda do papel é uma referência; confirme a margem física da sua impressora.
+- Engrenagem > Intervalo de salvamento: 15 s a 10 min, padrão 30 s. Alterações são acumuladas durante a edição. Salvar, trocar documento e ocultar a aba antecipam a gravação. Fechamento abrupto antes do intervalo pode perder alterações; salve manualmente antes de fechar.
+- Engrenagem > Limpar atividades antigas: exige conexão e confirmação. Remove atividades dos dois acervos e históricos anteriores, preservando os 23 modelos pedagógicos, modelos pessoais e banco de imagens. Faça backup antes; execute com as outras abas/dispositivos fechados. A limpeza não ocorre automaticamente no deploy.
+- Não são gerados novos históricos persistentes. Desfazer/refazer continuam disponíveis durante a sessão.
+- Limpar atividade cria novo documento com cabeçalho preservado e guarda o anterior.
+- Importação padrão: Biblioteca de Referências; altere o destino se desejar.
+
+Validação: tsc 5.8.3, usando declaração temporária para o SDK Identity (não incluída no ZIP). O Chromium não permitiu navegar na página de testes nesta sessão. O build com as dependências reais e a sincronização real precisam de validação no Netlify.
+
+---
+
 # Marks Class Studio — V7.2
 
 Plataforma de uso individual do professor (sem autenticação nesta versão) para criar, importar, editar, organizar e exportar atividades pedagógicas de **Língua Inglesa** e **Projeto de Vida**.
@@ -148,3 +166,17 @@ Para recuperar: engrenagem → Importar backup, selecione o JSON e confirme. A r
 ### Validação V8
 
 Validação local com TypeScript 5.8.3 e uma declaração de teste temporária para o SDK Identity (não incluída no projeto); Chromium com serviços e autenticação simulados para painel, modelos, gabarito automático, tela de alteração de senha, exportação/restauração de backup e tela estreita. A instalação das dependências não foi possível neste ambiente (rede DNS indisponível). Portanto, ainda é necessário confirmar o build real, a API Identity, a sincronização de Blobs e a recuperação por e-mail no Netlify. A geração por IA continua dependendo de `OPENAI_API_KEY`. A infraestrutura nova não substitui os testes de importação PDF/Word com seus arquivos reais.
+
+## V9 — Memória pedagógica e banco de questões
+
+Base: V8.1. Os acervos existentes e as configurações de acesso são preservados. Referências → Importar até 20 arquivos: selecione PDF/DOCX, componente, série e tipo. O envio exige conexão e permite até 25 MB por arquivo. O original é enviado em partes, identificado por SHA-256 e confirmado antes da extração do texto. Duplicatas do mesmo conteúdo são ignoradas. A falha de um arquivo não cancela os outros. Mantenha a janela aberta durante o envio; o botão Tentar novamente reenvia os itens não confirmados. Não há fila de arquivos offline persistente.
+
+A biblioteca permite baixar o original, revisar/editar o conteúdo extraído, reprocessar, extrair questões, abrir uma cópia editável e excluir a referência. PDFs digitalizados sem texto permanecem armazenados, mas exigem transcrição/revisão manual; não há OCR automático. A reconstrução visual continua sujeita aos limites do PDF/Word. Imagens dos originais são preservadas no arquivo, não indexadas visualmente pela IA. O texto pesquisável é limitado a 1,5 milhão de caracteres por documento. A importação por link aceita URLs públicas diretas de PDF/DOCX que permitam leitura pelo navegador (CORS); se bloqueadas, baixe e envie o arquivo. Não importa páginas HTML ou pastas do Drive.
+
+Banco de questões: acesse em Referências → Banco de questões ou Pedagógico → Banco de questões. Cadastre manualmente componente, série, tema, tipo, texto de apoio, enunciado, alternativas e gabarito. É possível formatar o enunciado e inserir imagens de até 900 KB. Questões detectadas em documentos numerados são marcadas para revisão; a detecção é heurística, e as respostas não são inventadas. Selecione uma ou várias questões, informe a numeração inicial e escolha incluir o contexto e o gabarito. O conteúdo é inserido na atividade atual; revise a distribuição de páginas. A edição das questões usa o intervalo de salvamento escolhido nas configurações e tenta salvar ao fechar. O banco é independente: remover uma referência não apaga automaticamente suas questões extraídas. Exclua-as pelo banco quando necessário.
+
+Na geração de IA, habilite o uso da biblioteca. A função consulta referências da disciplina (ou gerais) e questões revisadas, ordenando trechos por termos de busca e série, sem enviar o acervo inteiro à API. É recuperação lexical, não treinamento do modelo ou busca vetorial. A consulta ainda lê os registros de texto na nuvem; bibliotecas muito grandes podem precisar de indexação otimizada posteriormente. Requer OPENAI_API_KEY no Netlify. As referências são tratadas como dados, não instruções.
+
+O backup completo online inclui originais confirmados, textos extraídos, banco de questões e acervos anteriores. Backups antigos continuam aceitos; documentos antigos sem original armazenado não ganham original automaticamente. A restauração mescla dados. O backup em JSON pode ficar grande; mantenha cópia privada e conexão durante a operação.
+
+Validação: TypeScript 5.8.3 com declarações temporárias para o SDK Identity, não incluídas no pacote; testes de funções com armazenamento e autorização simulados: integridade do original, envio incompleto, duplicatas, extração de questões numeradas, cadastro manual, exclusão, restauração e consulta por disciplina. Não foi validado o build com dependências reais, o fluxo completo no navegador, o login real, o Netlify Blobs nem a geração com API real. Teste com um lote pequeno antes de importar todo o acervo.

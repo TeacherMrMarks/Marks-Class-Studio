@@ -1,0 +1,24 @@
+MARKS CLASS STUDIO — V9
+Base V8.1
+
+Faça um backup antes. Atualize todos os arquivos listados antes de validar o deploy final.
+
+SUBSTITUIR:
+README.md
+netlify/functions/generate-activity.mts
+package.json
+src/auth.ts
+src/main.ts
+src/style.css
+src/vendor.d.ts
+
+ADICIONAR:
+netlify/functions/question-bank.mts
+netlify/functions/reference-memory.mts
+netlify/shared/question-bank.mts
+netlify/shared/reference-memory.mts
+src/question-bank.ts
+src/reference-memory.ts
+
+As pastas src, netlify/functions e netlify/shared já existem na V8.1. Não crie outra pasta raiz. Preserve as variáveis MCS_OWNER_EMAIL e OPENAI_API_KEY (se configurada), e o Identity.
+Teste inicialmente com cinco arquivos e uma questão autoral.
