@@ -25,7 +25,7 @@ declare module 'pdfjs-dist/build/pdf.worker.min.mjs?url' { const url:string; exp
 declare module '*.png?inline' { const dataUrl:string; export default dataUrl; }
 declare module '@netlify/blobs' {
   type BlobEntry={key:string};
-  type Store={setJSON(key:string,value:unknown):Promise<void>;get(key:string,options:{type:'json'}):Promise<any>;list():Promise<{blobs:BlobEntry[]}>;delete(key:string):Promise<void>};
-  export function getStore(name:string):Store;
+  type Store={setJSON(key:string,value:unknown):Promise<void>;get(key:string,options:{type:'json'}):Promise<any>;list(options?:{prefix?:string}):Promise<{blobs:BlobEntry[]}>;delete(key:string):Promise<void>};
+  export function getStore(name:string|{name:string;consistency:'strong'}):Store;
 }
 declare const process:{env:Record<string,string|undefined>};
