@@ -180,3 +180,29 @@
 .question-modal #qbInsertBar{margin:6px 10px;padding:6px;gap:6px}.question-modal #qbStatus{padding:0 10px}
 .key-activity-picker{display:grid;gap:6px;padding:12px 16px 0}.key-activity-picker select{width:100%;min-width:0;background:#0b1726;color:#eef5fb;border:1px solid #314b66;border-radius:6px;padding:8px}.key-activity-picker p{margin:2px 0;color:#e7c47b;font-weight:600}
 #answerKeyDialog .modal-actions{flex-wrap:wrap;gap:5px}#answerKeyDialog #keyLinkedStatus{padding:0 16px}.key-preview-dialog #keyPreviewMount{padding:8px;display:grid;gap:8px}.key-preview-dialog iframe{width:100%;height:72vh;border:0;background:#fff}.key-preview-dialog a{color:#a9ded7}
+
+/* V14: contextual image controls and inline numbering. */
+.qb-number{white-space:nowrap;display:inline!important;margin:0;padding:0}
+.qb-image-actions{max-width:min(90vw,460px);flex-wrap:wrap;white-space:normal}
+.qb-rich img{cursor:pointer}
+
+.floating-object .mks-grip{width:11px;height:11px;border:1px solid white;background:#149d82;border-radius:2px;transform:translate(-50%,-50%);right:auto;bottom:auto;touch-action:none}
+.floating-object .mks-grip.grip-nw{left:0;top:0;cursor:nwse-resize}.floating-object .mks-grip.grip-ne{left:100%;top:0;cursor:nesw-resize}.floating-object .mks-grip.grip-sw{left:0;top:100%;cursor:nesw-resize}.floating-object .mks-grip.grip-se{left:100%;top:100%;cursor:nwse-resize}.floating-object .mks-grip.grip-n{left:50%;top:0;cursor:ns-resize}.floating-object .mks-grip.grip-s{left:50%;top:100%;cursor:ns-resize}.floating-object .mks-grip.grip-w{left:0;top:50%;cursor:ew-resize}.floating-object .mks-grip.grip-e{left:100%;top:50%;cursor:ew-resize}
+
+/* V15 — question editing: focused sections and persistent actions */
+#qbEdit .qb-identification,#qbEdit .qb-advanced{border:1px solid #344b61;border-radius:9px;padding:9px 12px;margin:8px 0 12px;background:#122338}
+#qbEdit details>summary{cursor:pointer;color:#e2bd70;font-weight:600;padding:4px 0}
+#qbEdit .qb-identification .question-fields{margin-top:8px}
+#qbEdit .qb-pair-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:8px;margin:6px 0;align-items:center}
+#qbEdit .qb-pair-row input,#qbEdit .qb-pair-row select{width:100%;min-width:0;padding:8px;border-radius:6px}
+#qbPairEditor>button{margin:5px 6px 6px 0}
+#qbEdit .qb-edit-footer{position:sticky;bottom:0;z-index:8;background:#102235;border-top:1px solid #405970;padding:10px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+#qbEditStatus{flex:1 1 100%;margin:0;font-size:13px;color:#e7c98c;min-height:1.2em}
+#qbEdit .qb-edit-footer button{padding:8px 12px;border-radius:6px}
+#qbSave{background:#225567!important;font-weight:700}
+#qbEdit .qb-rich{max-width:100%;box-sizing:border-box}
+#qbEdit [hidden]{display:none!important}
+#qbEdit .qb-pair-head{font-size:13px;color:#b8cbdc;margin:6px 0;font-weight:600}
+#qbEdit #qbTranslationModeWrap{margin:12px 0;display:grid;gap:5px}
+#qbEdit #qbTranslationMode{max-width:340px}
+.curr-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px;position:sticky;bottom:0;background:#101e30;z-index:2}.curr-form,.curr-filters,.curr-picker{display:grid;gap:8px;padding:12px}.curr-filters,.curr-picker{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.curr-form label,.curr-filters label,.curr-picker label{display:grid;gap:4px}.curr-form textarea{width:100%;resize:vertical}.curr-form .curr-check{display:flex;align-items:center;gap:8px}.curr-paper{background:white;color:#111;font:11pt Arial;max-width:210mm;margin:12px auto;padding:9mm;overflow-wrap:anywhere}.curr-paper .mks-plan{border:1px solid #111}.curr-paper header{text-align:center;padding:3mm;font-size:10pt}.curr-paper header img{width:34mm;max-height:16mm;object-fit:contain}.curr-paper h3 span{background:#c7dba3}.curr-paper section{border-top:1px solid #111;padding:2mm;text-align:justify}.curr-paper .split{display:flex;gap:3mm;flex-wrap:wrap}.curr-paper .split>div{flex:1;min-width:40%}.curr-paper .mks-sign{display:flex;justify-content:space-between;margin-top:20mm;font-size:9pt}.curr-paper ul{margin:1mm 0}.curr-picker select{max-width:100%;min-width:0}.curr-picker{grid-column:1/-1}

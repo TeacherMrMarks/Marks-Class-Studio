@@ -1,0 +1,11 @@
+MARKS CLASS STUDIO V16 — BASE V15
+Antes de atualizar, exporte o backup da V15. Teste pelo Permalink.
+Substituir na raiz: package.json, README.md.
+Substituir em src: auth.ts, main.ts, style.css, question-bank.ts.
+Adicionar em src: curriculum.ts, curriculum-seed.ts.
+Substituir em netlify/functions: question-bank.mts.
+Adicionar em netlify/functions: curriculum.mts.
+Substituir em netlify/shared: question-bank.mts.
+Não altere MCS_OWNER_EMAIL ou as chaves de armazenamento existentes.
+O novo endpoint usa o mesmo controle de acesso da plataforma.
+Planos: selecione atividades, revise os campos e salve. Salvar PDF abre a impressão do navegador, escolha Salvar como PDF e habilite gráficos de fundo para o destaque verde. Prévia e impressão omitem seções vazias. A edição usa campos de texto, não formatação rica independente. Layout inspirado no modelo oficial, precisa de teste de impressão real. Não há IA paga; sugestões são regras locais. Os dados iniciais cobrem somente o primeiro trimestre de 2026 de inglês, três séries. Projeto de Vida permite cadastro manual.

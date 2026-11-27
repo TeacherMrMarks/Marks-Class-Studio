@@ -89,3 +89,24 @@ Consulte `ATUALIZACAO_V10_GITHUB.txt`. Não crie um projeto novo nem limpe o arm
 ## V13 — persistência e ajustes do banco
 
 Consulte `ATUALIZACAO_V13_GITHUB.txt` para os arquivos alterados e o procedimento de limpeza voluntária de registros legados. A aba Modelos foi retirada do topo; os dados antigos não são apagados automaticamente. O editor de interpretação de textos oferece imagem opcional antes do texto de apoio; a numeração é inserida no enunciado quando houver. Rascunhos sem nome permanecem locais até serem salvos como atividade. O backup inclui o rascunho separadamente. O gabarito lista atividades nomeadas com respostas vinculadas. As funções de atividades e questões respeitam registros de exclusão persistentes.
+
+## V14 — Numeração, imagens e navegação
+
+- A numeração é inserida no primeiro trecho textual do enunciado, inclusive HTML aninhado. Questões sem texto usam uma linha própria.
+- Controles contextuais de imagens em campos ricos do banco; oito alças e alinhamento no editor principal.
+- Fechar ou salvar a edição individual retorna ao banco, preservando filtros, seleção e rolagem. Fechar o banco retorna ao editor principal.
+- Mantidas as chaves de armazenamento e funções da V13. Nenhuma limpeza automática.
+- Validação local TypeScript com SDK Identity simulado; testes visuais e deploy real pendentes.
+
+## V15 — Praticidade e estabilidade
+
+- Associação, verdadeiro/falso, correção e tradução por itens: campos independentes por par, adição e remoção de itens, colagem em lote opcional.
+- Tradução: opção de texto completo com editor rico, imagem, linhas de resposta e tradução esperada separada; opção por itens mantém o gerador existente.
+- Lacunas: botão para transformar a seleção do texto-fonte em lacuna.
+- Geradores: visualização e salvamento tentam atualizar automaticamente o resultado quando a entrada muda. Mensagens de validação ficam próximas às ações; conteúdo inválido continua no editor.
+- Identificação e layout avançado recolhíveis; ações fixadas na parte inferior.
+- Mantidas as chaves de armazenamento, funções Netlify e formato de backup da V14.
+- Validação: TypeScript com declaração temporária do SDK Identity e testes unitários de exemplo dos sete geradores. Não houve teste integral de navegador/Netlify/PDF. Campos de entrada dos geradores ainda são de texto simples; o resultado possui editor rico. Fazer backup antes da atualização.
+
+## V16 — Currículo e planejamento
+Veja ATUALIZACAO_V16_GITHUB.txt. Novo acervo curricular com 14 registros oficiais de Língua Inglesa do primeiro trimestre de 2026, separados por série, com sugestões pedagógicas editáveis. Acervo de planos independente, seleção de atividades, vínculo curricular por questão, exclusões registradas, sincronização e backup. Impressão A4 e PDF via diálogo de impressão do navegador. Campos vazios omitidos. Os planos guardam os textos gerados, sem alterações retroativas ao editar habilidades. A geração usa regras locais e dados cadastrados, não IA. Campos de plano editáveis em formulário; prévia não é editor rico. Validação local com declaração simulada de Identity; deploy e impressão real ainda não verificados.
