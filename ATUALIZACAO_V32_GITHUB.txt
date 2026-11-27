@@ -1,0 +1,19 @@
+MARKS CLASS STUDIO — V32
+Base: V31
+
+Substituir:
+  package.json
+  README.md
+  src/auth.ts
+  src/main.ts
+  src/appearance.css
+  src/curriculum.ts
+  src/question-bank.ts
+  src/editor-v31.ts
+
+Adicionar:
+  src/answer-lines.ts
+  ATUALIZACAO_V32_GITHUB.txt (opcional, instruções)
+
+Nenhuma alteração em netlify/functions ou public.
+Faça backup e teste o Permalink antes de publicar. Veja as limitações no README.

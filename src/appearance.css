@@ -355,3 +355,22 @@ html:not([data-mks-theme="original"]) :is(.modal,.sidebar,.top-chrome) :focus-vi
 @counter-style mks-lower-alpha-paren{system:extends lower-alpha;suffix:') ';}
 @counter-style mks-decimal-parens{system:extends decimal;prefix:'(';suffix:') ';}
 @media(max-width:600px){.v31-fields{grid-template-columns:1fr}.v31-grid button{min-height:44px}}
+/* V32: native A4 preview, elastic answer lines, readable controls. */
+.saved-preview-pages>.page{flex:none;zoom:1!important;min-width:var(--page-width);min-height:var(--page-height);}
+.saved-preview-pages{align-items:safe center;}
+#pagesMount .editor{scrollbar-width:none;}
+#pagesMount .editor::-webkit-scrollbar{display:none;}
+.editor .ped-answer-line,.question-editor .ped-answer-line{display:block;box-sizing:border-box;min-height:6mm;}
+.editor .mks-response-row,.question-editor .mks-response-row{display:flex!important;align-items:baseline;gap:2px;min-width:0;text-align:left!important;}
+.mks-response-fill{display:inline-block;flex:1 1 1em;min-width:1em;align-self:stretch;border-bottom:1px solid #333;}
+.format-bar .mks-font-grow{font-size:17px;font-weight:600;line-height:1;}
+.format-bar .mks-font-shrink{font-size:12px;font-weight:600;line-height:1;}
+.format-bar #bulletLibrary,.format-bar #numberLibrary{min-width:16px!important;width:16px!important;padding:0!important;margin-left:-3px;}
+.plan-choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3px 12px;background:var(--mks-panel,#15283b);border:1px solid var(--mks-border,#3b5268);padding:8px;border-radius:6px;}
+.plan-choice-grid .curr-check{display:flex;align-items:center;gap:6px;margin:0;min-height:28px;}
+.plan-choice-grid .curr-check input{width:17px;height:17px;flex:none;accent-color:var(--mks-accent,#087d83);}
+.plan-choice-add{display:flex;gap:6px;align-items:center;margin:5px 0;}.plan-choice-add input{flex:1;min-width:0;}
+.curr-paper .plan-choice-print{display:grid;gap:2mm 4mm;break-inside:avoid;}.curr-paper .plan-choice-print ul{list-style:square;padding-left:1.2em;margin:0;}.curr-paper .plan-choice-print li{overflow-wrap:anywhere;}
+@media(max-width:600px){.saved-preview-pages>.page{zoom:var(--mks-doc-zoom,.4)!important;}.plan-choice-grid{grid-template-columns:1fr;}}
+#pagesMount .editor,.saved-preview-pages .editor{min-height:0;}
+.mks-response-label{flex:0 1 auto;min-width:0;white-space:normal;}
