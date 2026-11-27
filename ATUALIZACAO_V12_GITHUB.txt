@@ -1,0 +1,28 @@
+MARKS CLASS STUDIO — V12 (MKS)
+
+1. Antes de atualizar, faça o backup completo e confirme que a nuvem está sincronizada.
+2. Use o mesmo repositório GitHub e site Netlify da V11. Não apague seus dados nem as configurações de autenticação.
+3. Extraia o ZIP. Substitua os arquivos abaixo nas respectivas pastas:
+
+RAIZ
+  package.json
+  README.md
+SRC
+  auth.ts
+  main.ts
+  style.css
+  question-bank.ts
+  word-search.ts
+NETLIFY/FUNCTIONS
+  question-bank.mts
+NETLIFY/SHARED
+  question-bank.mts
+
+4. NOVO arquivo na pasta src:
+  question-types.ts
+
+Não crie novas pastas. Os dois question-bank.mts são diferentes: coloque cada um na pasta correta. O tutorial é informativo e não é necessário para o build. Os demais arquivos da V11 não foram alterados.
+5. Faça todos os commits antes de publicar o pacote completo. No Netlify, confira o deploy V12; use o permalink de teste se disponível. Evite alternar entre versões ao editar questões, pois a versão anterior não conhece os metadados novos.
+6. Teste uma questão antiga e uma nova de cada tipo, a pesquisa, a prévia A4, a inserção e o gabarito. Confirme o salvamento, recarregue e exporte um backup. Não restaure um backup antigo sem necessidade.
+
+Validação local com serviços simulados; build e sincronização real ainda não confirmados. O plano de aula permanece provisório. Gabarito do caça-palavras em coordenadas.

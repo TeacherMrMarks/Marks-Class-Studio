@@ -2,10 +2,10 @@
 export type WordPlacement={word:string;row:number;col:number;dr:number;dc:number};
 export type WordPuzzle={grid:string[][];placements:WordPlacement[]};
 export function normalizeWords(input:string){return [...new Set(input.split(/[\n,;]+/).map(s=>s.trim().toUpperCase().normalize('NFD').replace(/\p{M}/gu,'').replace(/[^A-Z]/g,'')).filter(Boolean))];}
-export function generateWordSearch(words:string[],requested:number,random:()=>number=Math.random):WordPuzzle{
+export function generateWordSearch(words:string[],requested:number,random:()=>number=Math.random,direction="all"):WordPuzzle{
  if(!words.length||words.length>25||words.some(w=>!/^[A-Z]{2,25}$/.test(w)))throw new Error('Informe de 1 a 25 palavras distintas, com 2 a 25 letras.');
  const n=Math.max(6,Math.min(30,Math.ceil(requested)||12),...words.map(w=>w.length));
- const sorted=[...new Set(words)].sort((a,b)=>b.length-a.length);const dirs=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
+ const sorted=[...new Set(words)].sort((a,b)=>b.length-a.length);const dirs=direction==="easy"?[[0,1],[1,0]]:direction==="medium"?[[0,1],[1,0],[1,1],[-1,1]]:[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
  const attempt=(size:number,fallback=false):WordPuzzle|null=>{const grid=Array.from({length:size},()=>Array<string>(size).fill(''));const placements:WordPlacement[]=[];
  for(const [idx,word] of sorted.entries()){let candidates:WordPlacement[]=[];if(fallback)candidates=[{word,row:idx,col:0,dr:0,dc:1}];else for(let r=0;r<size;r++)for(let c=0;c<size;c++)for(const [dr,dc] of dirs){const er=r+dr*(word.length-1),ec=c+dc*(word.length-1);if(er<0||er>=size||ec<0||ec>=size)continue;if([...word].every((ch,k)=>!grid[r+dr*k][c+dc*k]||grid[r+dr*k][c+dc*k]===ch))candidates.push({word,row:r,col:c,dr,dc});}
  if(!candidates.length)return null;const p=candidates[Math.floor(random()*candidates.length)];[...word].forEach((ch,k)=>grid[p.row+p.dr*k][p.col+p.dc*k]=ch);placements.push(p);}

@@ -1,4 +1,53 @@
-# Marks Class Studio — V10
+# Marks Class Studio — V12 (MKS)
+
+Atualização sobre a V11. O Banco de Questões é único e oferece onze editores especializados. A marca MKS aparece no cabeçalho e no login. Os registros, login, configuração do Netlify, editor principal, planos de aula e armazenamento existentes continuam sendo usados; não apague dados ou altere o nome do site.
+
+## Novidades
+
+- Seletor de editor: interpretação de imagens, interpretação de textos, caça-palavras, associação, lacunas, verdadeiro/falso, ordenação, correção, tradução, produção textual e questão livre.
+- Cadastro de uma ou várias séries (1º, 2º e 3º ano EM), modalidade Regular/EMTI/Ambas, tipo de editor, componente, assunto, filtros e habilidade. A lista e os filtros consultam o mesmo banco. Questões antigas sem o novo tipo explícito recebem uma classificação inicial inferida; revise-as se necessário.
+- Enunciado, texto de apoio, imagens, comando, alternativas e linhas para resposta aberta; prévia A4, formatação, gabarito e justificativa. Habilidade e classificação não são impressas na atividade.
+- Geradores locais, sem IA: informe palavras, pares separados por `|`, frases ou texto com respostas entre `[colchetes]`, conforme a ajuda do editor. Configure os controles e clique em gerar. É possível revisar e formatar o resultado antes de salvar. Alterar os dados do gerador requer gerar novamente para atualizar o gabarito.
+- Caça-palavras com quadro de palavras acima da grade, dificuldade por direção e conferência do encaixe. O gabarito indica coordenadas, não uma segunda grade colorida. O tamanho solicitado pode aumentar para encaixar todas as palavras. Associação embaralha os significados, lacunas podem usar quadro de palavras e colunas. Verdadeiro/falso aceita V/F ou T/F; correção e tradução usam respostas fornecidas pelo professor.
+- Metadados e dados dos geradores fazem parte de cada questão, do armazenamento local, sincronização e exportação do banco. A V12 usa o mesmo Netlify Blobs `marks-class-question-bank-v9`. Atualize também os dois arquivos do backend para preservar os novos campos.
+
+## Instalação e validação
+
+Consulte `ATUALIZACAO_V12_GITHUB.txt`. Faça um backup antes de atualizar. Testes locais: TypeScript com declaração simulada de Identity; 300 grades de caça-palavras verificadas; interface isolada em Chromium com API simulada (sete geradores, cadastro texto/imagem, filtros, reabertura, inserção e exportação de nove questões). O build real do Netlify, autenticação, sincronização e exportação do PDF com os novos layouts ainda precisam ser testados no ambiente publicado. Questões extensas podem exigir ajuste de paginação, como na V11. Revise o gabarito se alterar o resultado manualmente. O modelo de plano de aula permanece provisório.
+
+---
+
+## Histórico e referência de compatibilidade — V11
+
+# Marks Class Studio — V11
+
+Atualização diretamente sobre a V10. Mantém Netlify Identity, `MCS_OWNER_EMAIL`, armazenamento em Netlify Blobs, salvamento periódico, editor A4, modelos pedagógicos, imagens, importação e backup. Não é necessário usar IA paga. Não limpe os dados antigos.
+
+## Novidades
+
+- Banco de questões: identificação e nome, componente, série, tema, habilidade (uso interno), filtros personalizados, enunciado, imagens, comando, alternativas A–E expansíveis, resposta correta e justificativa separados. Campos ricos usam barra de formatação compartilhada. Questões antigas continuam no banco; o conteúdo legado é aberto no enunciado para revisão e separação manual, não é apagado.
+- Filtros: na engrenagem ou no banco, cadastre termos e sinônimos. Busca por nome, texto, tema, habilidade e etiquetas com dicionário bilíngue local e aliases cadastrados. Não é tradução universal ou busca semântica por IA. Renomear/excluir um filtro não apaga etiquetas de registros antigos; recadastre a classificação quando necessário.
+- Imagens: campo próprio, inserção/colagem, alças verdes de largura e altura, alinhamento, recorte, restauração, movimentação no fluxo e exclusão. Imagens remotas dependem de CORS; prefira o arquivo local.
+- Questões com tabelas: número de linhas/colunas, ajuste por medidas, arraste junto às divisórias, inserção/exclusão de linhas e colunas, mesclagem à direita, cor e alinhamento. Operações estruturais sobre células já mescladas têm restrições. Colunas 1/2/3, espaçamento e linha divisória; largura desigual em duas colunas separa enunciado/imagens do comando/alternativas, quando ambos existem.
+- Prévia A4 da questão e das selecionadas. Inserção preserva o HTML estruturado, não aplica uma nova colagem inteligente. A quebra de página pode mudar conforme cabeçalho e espaço disponível. A lista contém nome compacto, visualizar, editar, duplicar e excluir.
+- Caça-palavras: gerador local da V10 mantido, com validação das palavras, tabela editável e gabarito de coordenadas.
+- Gabarito: questões inseridas recebem um vínculo interno que acompanha a ordem e exclusão dos blocos; pode gerar simples ou comentado e exportar PDF. A habilidade não aparece na folha de atividade. O gabarito não detecta semanticamente se uma alternativa foi alterada no editor; revise depois de editar as respostas. Gabaritos manuais são preservados ao acrescentar questões até que o professor escolha explicitamente gerar um novo gabarito vinculado.
+- Plano de aula: botão no topo. Cria um documento independente, editável e salvo em Minhas Atividades, utilizando disciplina, turma, título, temas e habilidades das questões inseridas. O modelo de tabela, cores, objetivos e metodologia são provisórios; adapte ao modelo oficial quando for enviado. Habilidades ausentes ficam a definir, não são inventadas.
+- Paginação: mede cada página criada e distribui blocos para a seguinte, preservando ordem. Em questões longas, tenta separar seções/parágrafos intactos e manter comando e alternativas juntos. Tabelas, imagens ou blocos únicos maiores que a área útil podem exigir ajuste manual, assim como colunas complexas e objetos flutuantes. A prévia integral e PDF usam o fluxo da V10; a exportação avisa se há conteúdo fora da área útil.
+- Compartilhar: conserva o comportamento da V10. WhatsApp abre com mensagem no computador, PDF baixado precisa ser anexado; compartilhamento nativo de arquivo no celular depende do navegador.
+- Backup: novas informações da questão e seus vínculos integram os registros de documentos e questões; filtros personalizados integram as preferências sincronizadas. Exporte backup completo com internet. Nenhum dado antigo é removido automaticamente.
+
+## Atualização
+
+Leia `ATUALIZACAO_V11_GITHUB.txt`. Atualize também os dois arquivos do backend do banco; sem eles, os novos metadados não serão preservados pela nuvem. Nenhuma pasta nova. Não modifique as variáveis de autenticação.
+
+## Validação
+
+TypeScript local 5.8.3 com declarações simuladas de Identity; testes em Chromium com APIs, captura de PDF e armazenamento simulados. Testados campos separados, filtros português/inglês e aliases, cadastro e prévia, inserção preservando HTML, gabarito simples/comentado, plano provisório, gerador de caça-palavras, redimensionamento de imagens por alças, alinhamento, inserção e adição de linha em tabela, duplicação, backup e paginação de 120 parágrafos. Os serviços reais, compilação com dependências instaladas, PDF e WhatsApp ainda dependem de validação no Netlify. Não há teste integral de todas as combinações possíveis de layout.
+
+## Referência de compatibilidade — V10
+
+### Notas históricas da V10
 
 Atualização da V9 voltada à construção de atividades a partir do Banco de Questões. O aplicativo continua privado, com Netlify Identity, `MCS_OWNER_EMAIL`, armazenamento no Netlify Blobs e salvamento periódico configurável. As chaves e os formatos de armazenamento anteriores foram mantidos.
 
