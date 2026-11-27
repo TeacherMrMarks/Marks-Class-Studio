@@ -1,0 +1,17 @@
+MARKS CLASS STUDIO V29 — a partir da V28
+SUBSTITUIR:
+package.json
+README.md
+index.html
+src/entry.ts
+src/auth.ts
+src/main.ts
+src/question-bank.ts
+src/curriculum.ts
+public/manifest.webmanifest
+ADICIONAR:
+src/appearance.ts
+src/appearance.css
+ATUALIZACAO_V29_GITHUB.txt (opcional, documentação)
+Nenhuma pasta nova; nenhuma alteração em netlify/. Mantenha os demais arquivos.
+Faça backup e teste via Permalink. A preferência de aparência é local por endereço/navegador.

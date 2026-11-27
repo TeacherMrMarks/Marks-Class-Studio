@@ -1,0 +1,5 @@
+MARKS CLASS STUDIO V28 — base V27
+Substituir: package.json, index.html, README.md, src/auth.ts, src/main.ts, src/style.css.
+Adicionar: src/mobile.ts e pasta public/ com manifest.webmanifest, mks-icon-192.png e mks-icon-512.png.
+Nenhuma alteração nas funções do Netlify ou chaves de armazenamento.
+Faça backup e teste no Permalink antes de publicar. Instale na tela inicial pelo endereço publicado habitual.
