@@ -1,0 +1,15 @@
+MARKS CLASS STUDIO V24 — Atualização cumulativa sobre V22 ou V23
+Faça backup antes de atualizar. Substitua os arquivos abaixo:
+- package.json
+- README.md
+- src/auth.ts
+- src/main.ts
+- src/style.css
+- src/question-bank.ts
+- src/question-types.ts
+- netlify/functions/question-bank.mts
+Adicione o novo arquivo:
+- src/visual-question-seed.ts
+Nenhuma nova pasta ou variável de ambiente. Não exclua arquivos do projeto ou dados do Netlify. Faça um único commit com todos os arquivos. Teste pelo Permalink autenticado antes de publicar. Os dois exemplos serão cadastrados ao abrir o Banco de Questões com conexão e autenticação funcionando.
+
+Revisão final: inclui colunas de seleção em 1, 2 ou 3 colunas; atualização de página inteira exige confirmação.

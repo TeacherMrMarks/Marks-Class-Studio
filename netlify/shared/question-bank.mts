@@ -1,6 +1,7 @@
 import { getStore } from '@netlify/blobs';
 import type { RefMeta } from './reference-memory.mjs';
-export type Question={id:string;sourceId:string;sourceName:string;number:string;component:'english'|'life-project'|'general';grade:string;topic:string;kind:string;html:string;context:string;answer:string;reviewed:boolean;updatedAt:string;name?:string;skill?:string;filters?:string[];correct?:string;justification?:string;columns?:number;gap?:number;divider?:boolean;columnWidth?:number;structured?:boolean;editorType?:string;series?:string[];schoolMode?:string;generatorData?:string;responseLines?:number;curriculumIds?:string[];curriculumObjects?:string[]};
+export type Subquestion={prompt:string;alternatives:string[];correct:string;answer:string;justification:string;lines:number;mode:'objective'|'open';skillId?:string};
+export type Question={id:string;sourceId:string;sourceName:string;number:string;component:'english'|'life-project'|'general';grade:string;topic:string;kind:string;html:string;context:string;answer:string;reviewed:boolean;updatedAt:string;name?:string;skill?:string;filters?:string[];correct?:string;justification?:string;columns?:number;gap?:number;divider?:boolean;columnWidth?:number;structured?:boolean;editorType?:string;series?:string[];schoolMode?:string;generatorData?:string;responseLines?:number;curriculumIds?:string[];curriculumObjects?:string[];subquestions?:Subquestion[]};
 export const questionStore=()=>getStore({name:'marks-class-question-bank-v9',consistency:'strong'});
 const esc=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c));
 const plainHtml=(s:string)=>s.split(/\n+/).filter(x=>x.trim()).map(x=>`<p>${esc(x.trim())}</p>`).join('');
