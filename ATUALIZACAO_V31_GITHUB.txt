@@ -1,0 +1,15 @@
+MARKS CLASS STUDIO — V31
+Base: V30.
+
+Substituir:
+  package.json
+  README.md
+  src/auth.ts
+  src/main.ts
+  src/appearance.css
+Adicionar:
+  src/editor-v31.ts
+Opcional (instruções): ATUALIZACAO_V31_GITHUB.txt
+
+Nenhuma pasta nova, nenhuma função Netlify alterada e nenhuma chave de armazenamento modificada.
+Faça backup e teste o Permalink antes de publicar. As formas usam PNG e parâmetros editáveis; a impressão e o PDF efetivos ainda precisam de validação no ambiente publicado.

@@ -1,0 +1,14 @@
+MKS V30 — atualização a partir da V29
+
+SUBSTITUIR:
+  package.json
+  README.md
+  src/auth.ts
+  src/main.ts
+  src/appearance.css
+
+ADICIONAR (opcional, instruções):
+  ATUALIZACAO_V30_GITHUB.txt
+
+Não há arquivos de código novos, nenhuma pasta nova, nem alteração nas funções Netlify ou chaves de armazenamento. Preserve os demais arquivos da V29.
+Faça backup e teste pelo Permalink antes de publicar.
