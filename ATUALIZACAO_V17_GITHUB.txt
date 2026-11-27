@@ -1,0 +1,9 @@
+V17 — Substituir somente:
+package.json
+README.md
+src/auth.ts
+src/main.ts
+src/style.css
+src/curriculum.ts
+src/curriculum-seed.ts
+Nenhuma função do Netlify alterada. Fazer backup antes de testar.

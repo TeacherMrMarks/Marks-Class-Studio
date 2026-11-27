@@ -110,3 +110,7 @@ Consulte `ATUALIZACAO_V13_GITHUB.txt` para os arquivos alterados e o procediment
 
 ## V16 — Currículo e planejamento
 Veja ATUALIZACAO_V16_GITHUB.txt. Novo acervo curricular com 14 registros oficiais de Língua Inglesa do primeiro trimestre de 2026, separados por série, com sugestões pedagógicas editáveis. Acervo de planos independente, seleção de atividades, vínculo curricular por questão, exclusões registradas, sincronização e backup. Impressão A4 e PDF via diálogo de impressão do navegador. Campos vazios omitidos. Os planos guardam os textos gerados, sem alterações retroativas ao editar habilidades. A geração usa regras locais e dados cadastrados, não IA. Campos de plano editáveis em formulário; prévia não é editor rico. Validação local com declaração simulada de Identity; deploy e impressão real ainda não verificados.
+
+## V17
+Cabeçalho de plano com divisórias, título 16 pt sem faixa, assinaturas próximas; sugestões pedagógicas individualizadas para 14 registros; visualização independente de atividades e seletor curricular em painel separado. Mantidas as chaves e funções de armazenamento V16. Sugestões iniciais são atualizadas apenas em registros de origem não editados.
+Validação: TypeScript com declaração temporária simulada de Identity; testes de navegador e deploy pendentes.
