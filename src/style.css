@@ -242,3 +242,21 @@
 
 /* V24: editores visuais compactos */
 .qb-visual-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px;border:1px solid var(--line);border-radius:6px;margin:4px 0}.qb-visual-row img{width:60px;height:42px;object-fit:contain;background:white}.qb-visual-row input[type=file]{max-width:220px;flex:1}.qb-visual-row input[type=text]{flex:2;min-width:130px;width:auto}.qb-visual-row button{padding:4px 8px}.qb-image-matching td{vertical-align:middle!important}.qb-drawing-boxes>div{box-sizing:border-box}
+
+/* V26 — activity library: compact labels and actions; keep the other libraries unchanged. */
+#activityLibraryMount #libraryList{gap:4px;padding:0 10px 10px}
+#activityLibraryMount .activity-list-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px 8px;padding:6px 8px;border-radius:7px;min-width:0}
+#activityLibraryMount .activity-list-label{min-width:0}
+#activityLibraryMount .activity-list-label strong{font-size:13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#activityLibraryMount .activity-list-label small{font-size:11px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#activityLibraryMount .activity-list-row .card-actions{gap:3px;flex-wrap:nowrap;justify-content:flex-end}
+#activityLibraryMount .activity-list-row .card-actions button{padding:4px 6px;font-size:11px;line-height:1.25;white-space:nowrap;min-height:26px;border-radius:5px}
+#activityLibraryMount .activity-list-row [data-skills]{color:#d8b571}
+@media(max-width:680px){#activityLibraryMount .activity-list-row{grid-template-columns:minmax(0,1fr);gap:4px}#activityLibraryMount .activity-list-row .card-actions{flex-wrap:wrap;justify-content:flex-start}#activityLibraryMount .activity-list-label strong{white-space:normal;overflow-wrap:anywhere}}
+.activity-skills-dialog .activity-skills-tools{padding:8px 14px}.activity-skills-dialog .activity-skills-tools p{margin:0;font-size:12px}.activity-skills-dialog .library-tools{padding:6px 0;display:flex;flex-wrap:wrap}.activity-skills-dialog .library-tools input{min-width:120px}.activity-skills-dialog .activity-skills-list{display:grid;gap:4px;padding:0 14px 10px;max-height:52vh;overflow:auto}.activity-skill-option{display:flex;align-items:flex-start;gap:8px;border:1px solid #344b63;border-radius:6px;padding:7px 9px;background:#12243a}.activity-skill-option input{width:auto;flex:0 0 auto;margin:3px 0}.activity-skill-option strong,.activity-skill-option small{display:block}.activity-skill-option strong{font-size:12px;color:#e2c388}.activity-skill-option small{font-size:12px;line-height:1.35;color:#d2dfeb}
+/* V26 — acervo de gabaritos manuais, separado dos automáticos. */
+.manual-key-tools{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px}.manual-key-tools input{flex:1;min-width:150px}.manual-key-list{display:grid;gap:4px;padding:0 12px 12px;max-height:65vh;overflow:auto}.manual-key-row{display:flex;align-items:center;gap:8px;padding:7px 9px;flex-wrap:wrap}.manual-key-row strong{flex:1;min-width:100px;font-size:13px;overflow-wrap:anywhere}.manual-key-row button{font-size:12px;padding:5px 7px}.manual-key-form{display:grid;gap:8px;padding:12px}.manual-key-form label{display:grid;gap:4px}.manual-key-form textarea{background:white!important;color:#161616!important;min-height:40vh;resize:vertical;font:14px/1.5 Arial,sans-serif;box-sizing:border-box;width:100%;padding:12px}.manual-key-form small{color:#a8c4d8}.manual-key-edit{max-height:92vh;overflow:auto}
+
+/* V26 final — monogram keeps its full width even in a narrow top bar. */
+.top-chrome .brand-mark{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;width:36px;min-width:36px;height:30px;flex:0 0 36px;padding:0 3px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:900;letter-spacing:0;line-height:1;white-space:nowrap;overflow:visible}
+@media(max-width:700px){.top-chrome .brand-mark{width:32px;min-width:32px;height:28px;flex-basis:32px;font-size:11px}}

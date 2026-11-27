@@ -1,0 +1,18 @@
+MARKS CLASS STUDIO V26 — atualizar a partir da V25
+
+Substituir:
+- package.json
+- README.md
+- src/auth.ts
+- src/main.ts
+- src/style.css
+- src/curriculum.ts
+- netlify/functions/aux-data.mts
+
+Adicionar:
+- src/activity-curriculum.ts
+- src/activity-import-v26.ts
+- src/manual-key-seed.ts
+- src/manual-keys.ts
+
+Nenhuma variável de ambiente nova. Faça backup antes de atualizar. Teste o Permalink antes de publicar. Evite editar os novos campos em versões antigas.
