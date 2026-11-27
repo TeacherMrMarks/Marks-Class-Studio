@@ -1,0 +1,5 @@
+MARKS CLASS STUDIO V27 — base V26 FINAL
+Substituir: package.json, README.md, src/auth.ts, src/main.ts, src/style.css, src/curriculum.ts, src/manual-keys.ts, netlify/functions/aux-data.mts
+Adicionar: src/manual-key-rich.ts
+O arquivo ATUALIZACAO_V27_GITHUB.txt é apenas orientação, não precisa subir.
+Não remover outros arquivos do projeto. Fazer backup e testar pelo Permalink.
