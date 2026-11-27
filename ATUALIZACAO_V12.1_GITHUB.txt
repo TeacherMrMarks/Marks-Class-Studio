@@ -1,0 +1,12 @@
+MKS — Marks Class Studio V12.1
+Base: V12.
+Substitua somente:
+  package.json
+  README.md
+  src/auth.ts
+  src/main.ts
+  src/style.css
+  src/question-bank.ts
+Nenhum arquivo novo de código, nenhuma alteração nas funções Netlify.
+Faça backup antes da atualização. Teste no Permalink antes de publicar.
+Validação: TypeScript com declaração temporária do SDK Identity; build completo e testes de navegador ainda pendentes.

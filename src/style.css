@@ -157,3 +157,26 @@
 
 /* V12: monograma MKS */
 .brand-mark{font-size:12px;letter-spacing:-.35px;flex-shrink:0}
+
+/* V12.1 — interface compacta, sem eliminar ferramentas. */
+.top-chrome .ribbon-tabs{display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap;padding:4px 7px}
+.top-chrome .ribbon-tabs .edit-menu-group,.top-chrome .ribbon-tabs .top-actions{margin:0;gap:4px;justify-content:center;flex:0 0 auto}
+.top-chrome .ribbon-tabs .top-actions button,.top-chrome .ribbon-tabs .edit-menu>button{padding:4px 7px;min-height:28px;font-size:12px}
+.top-chrome .format-bar{display:flex;flex-wrap:nowrap;justify-content:safe center;overflow-x:auto;overflow-y:hidden;gap:2px;padding:4px 5px;scrollbar-width:thin}
+.top-chrome .format-bar .format-group,.top-chrome .format-bar .quick-history{flex:none;gap:2px;padding:0 3px}
+.top-chrome .format-bar button,.top-chrome .format-bar select,.top-chrome .format-bar input[type=color]{min-height:27px;min-width:25px;padding:2px 4px;font-size:11px;flex:none}
+.top-chrome .format-bar .quick-history button{width:26px!important;min-width:26px}
+.top-chrome .format-bar #fontName{width:105px}.top-chrome .format-bar #fontSize{width:45px}.top-chrome .format-bar #fontColor{width:26px}.top-chrome .format-bar #listStyle{width:75px}.top-chrome .format-bar #lineHeight{width:66px}.top-chrome .format-bar #pasteChoice{width:68px}
+.question-modal .qb-searchbar{display:flex;gap:6px;align-items:center;margin:8px 10px}
+.question-modal .qb-searchbar input{flex:1;min-width:0;width:auto;padding:7px;border:1px solid #314b66;background:#0b1726;color:#eef5fb;border-radius:6px}
+.question-modal .qb-searchbar button{white-space:nowrap;min-height:30px;padding:5px 8px}
+.question-modal .qb-fold{margin:5px 10px;padding:0;border:1px solid #314b66;border-radius:6px;background:#101d2d}
+.question-modal .qb-fold summary{cursor:pointer;padding:8px 10px;font-size:13px;font-weight:600;color:#e7c47b;user-select:none}
+.question-modal .qb-fold[open] summary{border-bottom:1px solid #314b66}
+.question-modal .qb-fold .qb-filters,.question-modal .qb-fold .qb-picker-grid{padding:8px;margin:0}
+.question-modal .qb-fold .qb-filters{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:5px}
+.question-modal .qb-fold .qb-filters select,.question-modal .qb-fold .qb-filters button{font-size:12px;min-height:30px;padding:5px;min-width:0}
+.question-modal .qb-fold .qb-picker-grid button{min-height:46px;padding:6px!important}
+.question-modal #qbInsertBar{margin:6px 10px;padding:6px;gap:6px}.question-modal #qbStatus{padding:0 10px}
+.key-activity-picker{display:grid;gap:6px;padding:12px 16px 0}.key-activity-picker select{width:100%;min-width:0;background:#0b1726;color:#eef5fb;border:1px solid #314b66;border-radius:6px;padding:8px}.key-activity-picker p{margin:2px 0;color:#e7c47b;font-weight:600}
+#answerKeyDialog .modal-actions{flex-wrap:wrap;gap:5px}#answerKeyDialog #keyLinkedStatus{padding:0 16px}.key-preview-dialog #keyPreviewMount{padding:8px;display:grid;gap:8px}.key-preview-dialog iframe{width:100%;height:72vh;border:0;background:#fff}.key-preview-dialog a{color:#a9ded7}

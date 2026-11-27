@@ -1,3 +1,7 @@
+# V12.1 — Interface compacta e gabaritos por atividade
+
+Filtros e seleção de editores recolhíveis; menu Pedagógico removido (modelos no menu Modelos e padronização em Arquivo); ações centralizadas; barra de formatação em uma linha com rolagem horizontal em telas estreitas. O painel Gabarito seleciona a atividade atual ou uma atividade salva, sem substituir o documento aberto. A prévia A4 utiliza o PDF do gabarito selecionado. Os gabaritos permanecem no registro da atividade, com a sincronização e backup existentes. Faça backup antes de publicar.
+
 # Marks Class Studio — V12 (MKS)
 
 Atualização sobre a V11. O Banco de Questões é único e oferece onze editores especializados. A marca MKS aparece no cabeçalho e no login. Os registros, login, configuração do Netlify, editor principal, planos de aula e armazenamento existentes continuam sendo usados; não apague dados ou altere o nome do site.
