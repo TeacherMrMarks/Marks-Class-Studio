@@ -1,0 +1,13 @@
+MARKS CLASS STUDIO V21 — Atualização sobre V20
+Faça um backup antes de atualizar.
+Substitua:
+- package.json
+- README.md
+- src/auth.ts
+- src/main.ts
+- src/style.css
+- src/question-bank.ts
+- src/question-types.ts
+- src/curriculum.ts
+Nenhum novo arquivo de código e nenhuma função Netlify alterada.
+Teste no Permalink. Para recuperar um plano editado em um deploy anterior, volte ao endereço onde o editou e salve/sincronize ou exporte o backup antes de trocar de endereço. O compartilhamento de dados entre deploys depende da autenticação e do acesso ao mesmo armazenamento da nuvem.

@@ -136,3 +136,19 @@ Validação: TypeScript com declaração temporária simulada de Identity; teste
 
 ### Sugestão curricular V20
 O vínculo curricular sugere uma habilidade existente com base em termos do título, tema, categoria, enunciado e textos, respeitando componente, séries e filtros curriculares. A seleção manual tem prioridade; correspondências insuficientes ou empatadas não são forçadas. O mecanismo é lexical, não uma IA semântica. O formato de resposta permanece separado da categoria. Os dados e as chaves de armazenamento anteriores permanecem inalterados.
+
+## V21 — Controle da paginação A4
+- Layout → Puxar conteúdo da página seguinte: move blocos que cabem na área restante.
+- Backspace no início de uma página: tenta juntar com a anterior, sem apagar texto.
+- Layout → Inserir quebra antes do bloco: posicione o cursor no bloco que deve iniciar a próxima folha. A quebra é manual.
+- Layout → Remover quebra anterior / juntar: selecione a página posterior à quebra.
+- Ajustes manuais desligam a redistribuição automática do documento; Layout → Reorganizar páginas reativa o modo automático e preserva as quebras manuais.
+- A redistribuição divide contêineres de questões em blocos menores, preservando o vínculo com o gabarito. Tabelas, imagens, grades, colunas e alternativas permanecem inteiras. Páginas com objetos flutuantes não são reunidas automaticamente; use a edição manual. Blocos maiores que a área A4 precisam de ajustes de tamanho ou divisão manual.
+- O estado de paginação e as páginas fazem parte do documento e do backup. No modo manual, conteúdo que exceder a folha precisa ser ajustado antes da visualização; o PDF mantém o aviso de excesso existente.
+- Nenhuma alteração de chaves de armazenamento ou funções do Netlify.
+
+### V21 — Acabamento e persistência curricular
+- Categorias e editores em ordem alfabética (opções "Todos" primeiro); campo de categoria compacto.
+- Lista de habilidades compacta com código, componente, série, trimestre e ano letivo. Visualizar, Editar e Excluir; duplicação removida apenas das habilidades. Pesquisa continua consultando os textos completos.
+- Planos de aula: salvamento periódico conforme intervalo global; gravação antecipada ao fechar ou voltar, tentativa ao ocultar a aba e aviso de saída com edição pendente. Estado local e fila de sincronização preservam o rich text. Reenvio de pendências e confirmação de versão gravada; alterações salvas apenas localmente podem não estar disponíveis em outro Permalink.
+- Validação: TypeScript com declaração temporária simulada do SDK Identity; teste isolado do armazenamento curricular com serviço simulado (salvar, offline, reenviar, recuperar de cache vazio, preservar HTML e exclusão). Testes completos de navegador/paginação, build real Netlify, autenticação entre deploys e PDF pendentes. O navegador local não concluiu o teste de paginação. Nenhum dado pessoal do site foi acessado ou excluído.

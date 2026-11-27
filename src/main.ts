@@ -1,4 +1,4 @@
-import {setupCurriculum,syncCurriculum,curriculumSnapshot,restoreCurriculum,type Source} from './curriculum';
+import {setupCurriculum,syncCurriculum,hasCurriculumPending,curriculumSnapshot,restoreCurriculum,type Source} from './curriculum';
 import { setupQuestions, indexQuestions, exportQuestions, importQuestions, type Question, questionMarkup, localQuestions, questionAnswer, FILTER_PREF } from './question-bank';
 import { setupMemory, exportMemory, importMemory, type MemoryBackup } from './reference-memory';
 import './style.css';
@@ -68,6 +68,7 @@ type Activity = {
   sourceName?: string;
   collection?: "activity" | "reference" | "both";
   originalLayout?: boolean;
+  manualPagination?: boolean;
   tags?: string[];
   margins: Margins;
   pages: PageData[];
@@ -221,7 +222,7 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML = `
 <div class="app-shell">
   <div class="top-chrome"><header class="topbar">
-    <div class="brand"><span class="brand-mark">MKS</span><div><strong>Marks Class Studio</strong><small>Editor pedagógico de atividades • V20</small></div></div>
+    <div class="brand"><span class="brand-mark">MKS</span><div><strong>Marks Class Studio</strong><small>Editor pedagógico de atividades • V21</small></div></div>
     <nav class="side-menu top-library-menu" aria-label="Acervos e ferramentas">
         <button id="myActivitiesBtn" type="button"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h7l2 2h9v11H3z"/><path d="M3 7V4h7l2 3"/></svg><span>Atividades</span></button>
         <button id="bankTopBtn" type="button"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Banco de questões</span></button>
@@ -237,7 +238,7 @@ app.innerHTML = `
       <div class="ribbon"><div class="ribbon-tabs"><div class="edit-menu-group" aria-label="Ferramentas de edição"><div class="edit-menu"><button data-ribbon="file" type="button" aria-expanded="false" aria-controls="drop-file">Arquivo <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-file" class="ribbon-panel" data-panel="file" aria-label="Arquivo" hidden><div class="tool-group"><small>Documento</small><div><button id="fileNew">Novo</button><button id="openImportBtn">Importar PDF / Word</button><button id="fileOpen">Abrir</button><button id="fileSave">Salvar</button><button id="fileSaveAs">Salvar como</button><button id="fileRename">Renomear</button><button id="pedFormat">Formatar documento automaticamente</button></div></div></section></div><div class="edit-menu"><button data-ribbon="insert" type="button" aria-expanded="false" aria-controls="drop-insert">Inserir <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-insert" class="ribbon-panel" data-panel="insert" aria-label="Inserir" hidden>
             <div class="tool-group"><small>Elementos</small><div><button id="insertImageBtn">🖼 Imagem</button><input id="editorImageInput" type="file" accept="image/*" hidden /><button id="insertTextboxBtn">▣ Caixa de texto</button><button id="insertAnswerLinesBtn">≣ Linhas de resposta</button><button id="insertTableBtn">▦ Tabela ▾</button><button id="editTableBtn">Editar tabela</button><button id="imageAdjustBtn">Editar imagem</button></div></div>
             <div class="tool-group"><small>Páginas</small><div><button id="addPageBtn">＋ Adicionar página</button><button id="duplicatePageBtn">⧉ Duplicar página</button><button id="deletePageBtn">🗑 Excluir página</button></div></div>
-          </section></div><div class="edit-menu"><button data-ribbon="layout" type="button" aria-expanded="false" aria-controls="drop-layout">Layout <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-layout" class="ribbon-panel" data-panel="layout" aria-label="Layout" hidden><div class="tool-group"><small>Margens (mm)</small>      <div class="margin-grid">
+          </section></div><div class="edit-menu"><button data-ribbon="layout" type="button" aria-expanded="false" aria-controls="drop-layout">Layout <span aria-hidden="true" class="menu-chevron">▾</span></button><section id="drop-layout" class="ribbon-panel" data-panel="layout" aria-label="Layout" hidden><div class="tool-group"><small>Paginação A4</small><div><button id="paginationToggleBtn" type="button">Paginação inteligente: ligada</button><button id="pullPageBtn" type="button">↑ Puxar conteúdo da página seguinte</button><button id="manualBreakBtn" type="button">Inserir quebra antes do bloco</button><button id="removeBreakBtn" type="button">Remover quebra anterior / juntar</button><button id="reflowPagesBtn" type="button">Reorganizar páginas</button></div></div><div class="tool-group"><small>Margens (mm)</small>      <div class="margin-grid">
         <label>Sup.<input id="marginTop" type="number" min="5" max="35" step="1" /></label>
         <label>Dir.<input id="marginRight" type="number" min="5" max="35" step="1" /></label>
         <label>Inf.<input id="marginBottom" type="number" min="5" max="35" step="1" /></label>
@@ -500,6 +501,7 @@ const renderPages = () => {
   if (!activity.pages.some(p => p.id === activePageId)) activePageId = activity.pages[0].id;
   savedRange=null;savedHeader=null;
   pagesMount.innerHTML = '';
+  $('paginationToggleBtn').textContent='Paginação inteligente: '+(activity.manualPagination?'desligada':'ligada');
   activity.pages.forEach((p, index) => {
     const dims = pageDims(p.orientation);
     const page = document.createElement('section');
@@ -519,6 +521,7 @@ const renderPages = () => {
     editor.addEventListener('click',e=>{const img=(e.target as Element).closest<HTMLImageElement>('img');if(img&&editor.contains(img)){e.preventDefault();e.stopPropagation();selectInlineImage(img,editor,p,page);}});
     editor.addEventListener('focus', () => { savedHeader=null; activePageId = p.id; selectObject(null); });
     editor.addEventListener('input', () => { p.html = editor.innerHTML; if(insertingClipboard)return; scheduleSave('typing'); if(!activity.originalLayout)window.setTimeout(() => rebalanceOverflow(p.id), 0); });
+    editor.addEventListener('keydown',event=>{if(event.key!=='Backspace'||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey)return;const sel=getSelection();if(!sel?.isCollapsed||!sel.rangeCount||!editor.contains(sel.anchorNode))return;const before=sel.getRangeAt(0).cloneRange();before.selectNodeContents(editor);before.setEnd(sel.anchorNode!,sel.anchorOffset);const f=before.cloneContents();if(f.textContent?.replace(/[\s\u200b]/g,'')||f.querySelector('img,table,hr,.ped-answer-line,.image-placeholder'))return;const index=activity.pages.findIndex(x=>x.id===p.id);if(index>0){event.preventDefault();manualPull(index-1,true);}});
     editor.addEventListener('paste', event => {
       const data=event.clipboardData;if(!data)return;const mode=nextPasteMode;nextPasteMode='smart';window.clearTimeout(pasteModeTimer);
       const html=data.getData('text/html'),text=data.getData('text/plain');
@@ -546,28 +549,63 @@ const fitEditorHeights = () => {
     const available = Math.max(80, flow.clientHeight - ed.offsetTop - bottom - 4);
     ed.style.height = `${available}px`;
     ed.style.maxHeight = `${available}px`;
-    ed.style.overflow = 'hidden';
+    ed.style.overflow = activity.manualPagination ? 'auto' : 'hidden';
   });
 };
 
-const rebalanceOverflow = (pageId: string, save=true) => {
+// V21: move intact blocks and split only safe structural wrappers, keeping question linkage.
+function splitPageBlock(node:Element,side:'first'|'last'):{part:Element;rest:Element}|null{
+ if(!node.matches('.qb-question-block,.qb-structured,.qb-part-text,.qb-part-response,.qb-part-lines,.qb-part-generated')||node.querySelector('.image-placeholder')||/column-count|display\s*:\s*grid/.test(node.getAttribute('style')||'')||node.matches('.qb-structured')&&node.querySelector('.qb-col-left,.qb-col-right'))return null;
+ if([...node.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent?.trim()))return null;
+ const kids=[...node.children];if(!kids.length)return null;
+ const chosen=side==='first'?kids[0]:kids[kids.length-1];
+ const nested=splitPageBlock(chosen,side);const rest=node.cloneNode(true) as Element,part=node.cloneNode(false) as Element;
+ if(nested){const target=side==='first'?rest.firstElementChild!:rest.lastElementChild!;target.replaceWith(nested.rest);part.append(nested.part);return {part,rest};}
+ if(kids.length<2)return null;
+ const target=side==='first'?rest.firstElementChild!:rest.lastElementChild!;part.append(target);return {part,rest};
+}
+function pageBlank(ed:HTMLElement){return !ed.textContent?.replace(/[\s\u200b]/g,'')&&!ed.querySelector('img,table,hr,.ped-answer-line,.image-placeholder,[data-q-link]');}
+function pageEditor(id:string){return pagesMount.querySelector<HTMLDivElement>(`[data-editor-page="${CSS.escape(id)}"]`);}
+function pullPageContent(index:number):boolean{
+ const p=activity.pages[index],next=activity.pages[index+1];if(!p||!next||p.orientation!==next.orientation||p.columns!==next.columns||JSON.stringify(p.border)!==JSON.stringify(next.border)||activity.objects.some(o=>o.pageId===p.id||o.pageId===next.id))return false;
+ const ed=pageEditor(p.id),source=pageEditor(next.id);if(!ed||!source)return false;
+ const fits=()=>ed.scrollHeight<=ed.clientHeight+2&&ed.scrollWidth<=ed.clientWidth+3;
+ if(!fits())return false;let changed=false;
+ for(let count=0;count<2000;count++){
+  const first=source.firstChild;if(!first)break;if(first instanceof Element&&first.matches('.image-placeholder')||first instanceof Element&&first.querySelector('.image-placeholder'))break;
+  const blank=pageBlank(ed)?ed.innerHTML:null;if(blank!==null)ed.replaceChildren();
+  const copy=first.cloneNode(true);ed.append(copy);if(fits()){first.parentNode!.removeChild(first);changed=true;continue;}ed.removeChild(copy);
+  const split=first instanceof Element?splitPageBlock(first,'first'):null;
+  if(split){ed.append(split.part);if(fits()){first.replaceWith(split.rest);changed=true;continue;}split.part.remove();}
+  if(blank!==null)ed.innerHTML=blank;break;
+ }
+ if(changed){p.html=ed.innerHTML||'<p><br></p>';next.html=source.innerHTML||'<p><br></p>';}
+ return changed;
+}
+function manualPull(index:number,merge=false){
+ const p=activity.pages[index],next=activity.pages[index+1];if(!p||!next){toast('Não há página seguinte.');return;}
+ if(activity.objects.some(o=>o.pageId===p.id||o.pageId===next.id)){toast('Estas páginas contêm objetos flutuantes. Use recortar e colar para movê-los com segurança.');return;}
+ const changed=pullPageContent(index);const ed=pageEditor(next.id);const empty=!!ed&&pageBlank(ed);
+ if(!changed&&!empty){toast('Não há espaço suficiente para o próximo bloco ou os layouts são diferentes.');return;}
+ // Explicit intervention freezes the layout until automatic mode is re-enabled.
+ activity.manualPagination=true;if(empty&&(merge||next.autoFlow)){activity.pages.splice(index+1,1);}else next.autoFlow=false;
+ activePageId=p.id;renderPages();scheduleSave();const dest=pageEditor(p.id);if(dest){dest.focus();const r=document.createRange();r.selectNodeContents(dest);r.collapse(false);const sel=getSelection();sel?.removeAllRanges();sel?.addRange(r);}toast('Paginação ajustada manualmente.');
+}
+const rebalanceOverflow = (pageId: string, save=true, force=false) => {
+ if(activity.manualPagination&&!force)return;
  const start=activity.pages.findIndex(p=>p.id===pageId);if(start<0)return;let changed=false,iterations=0;
  for(let i=start;i<activity.pages.length&&iterations<12000;i++){
   const p=activity.pages[i];let ed=pagesMount.querySelector<HTMLDivElement>(`[data-editor-page="${CSS.escape(p.id)}"]`);if(!ed)continue;
   while((ed.scrollHeight>ed.clientHeight+3||ed.scrollWidth>ed.clientWidth+4)&&iterations++<12000){const node=ed.lastElementChild;if(!node||node.querySelector('.image-placeholder')||node.matches('.image-placeholder'))break;
    let moving:Element|null=null;
-   // Aproveita o espaço dividindo questões longas apenas entre blocos íntegros. Mantém o identificador interno em ambas as partes.
-   if(node.matches('.qb-question-block')&&!node.querySelector('.qb-structured[style*="column-count"],.qb-structured[style*="display: grid"],.qb-structured[style*="display:grid"]')){
-    const structured=node.querySelector('.qb-structured');const sections=structured?[...structured.children]:[...node.children];const last=sections.at(-1);const before=sections.slice(0,-1).some(x=>x.textContent?.trim()||x.querySelector('img,table'));
-    if(last&&before){const continuation=node.cloneNode(false) as HTMLElement;if(structured){const wrapper=structured.cloneNode(false) as HTMLElement;wrapper.append(last);continuation.append(wrapper);}else continuation.append(last);moving=continuation;}
-    else if(last&&last.children.length>1&&!last.matches('.qb-part-alternatives')&&!last.querySelector('table,img')){const tail=last.lastElementChild!;const continuation=node.cloneNode(false) as HTMLElement;if(structured){const wrapper=structured.cloneNode(false) as HTMLElement;const section=last.cloneNode(false) as HTMLElement;section.append(tail);wrapper.append(section);continuation.append(wrapper);}else{const section=last.cloneNode(false) as HTMLElement;section.append(tail);continuation.append(section);}moving=continuation;}
-   }
+   const split=splitPageBlock(node,'last');if(split){node.replaceWith(split.rest);moving=split.part;}
    if(!moving){if(ed.childElementCount<2)break;moving=node;}
-   if(!activity.pages[i+1])activity.pages.push({...blankPage(p.orientation,p.columns,'<p><br></p>'),autoFlow:true,border:p.border?{...p.border}:undefined});const next=activity.pages[i+1];const holder=document.createElement('div');holder.append(moving);p.html=ed.innerHTML;next.html=holder.innerHTML+next.html.replace(/^\s*<p><br\s*\/?><\/p>\s*/i,'');changed=true;
+   if(!activity.pages[i+1]?.autoFlow||activity.pages[i+1].orientation!==p.orientation||activity.pages[i+1].columns!==p.columns||JSON.stringify(activity.pages[i+1].border)!==JSON.stringify(p.border))activity.pages.splice(i+1,0,{...blankPage(p.orientation,p.columns,'<p><br></p>'),autoFlow:true,border:p.border?{...p.border}:undefined});const next=activity.pages[i+1];const holder=document.createElement('div');holder.append(moving);p.html=ed.innerHTML;next.html=holder.innerHTML+next.html.replace(/^\s*<p><br\s*\/?><\/p>\s*/i,'');changed=true;
   }
   if(changed){p.html=ed.innerHTML;renderPages();}
  }
- if(changed){let removed=false;while(activity.pages.length>1){const last=activity.pages.at(-1)!;if(!last.autoFlow||stripHtml(last.html).trim()||/<(?:img|table|hr)\b/i.test(last.html)||activity.objects.some(o=>o.pageId===last.id))break;activity.pages.pop();removed=true;}if(removed)renderPages();if(save)scheduleSave();}
+ for(let i=Math.max(0,start-1);i<activity.pages.length-1;i++){if(activity.pages[i+1].autoFlow&&pullPageContent(i))changed=true;}
+ if(changed){for(let i=activity.pages.length-1;i>0;i--){const p=activity.pages[i],ed=pageEditor(p.id);if(p.autoFlow&&ed&&pageBlank(ed)&&!activity.objects.some(o=>o.pageId===p.id))activity.pages.splice(i,1);}renderPages();if(save)scheduleSave();}
 };
 
 window.addEventListener('resize', () => fitEditorHeights());
@@ -688,6 +726,12 @@ $('deleteObjectBtn').addEventListener('click',()=>{if(!selectedObjectId){toast('
 
 const addPage=(orientation:Orientation=activePage()?.orientation||'portrait',columns:1|2|3=activePage()?.columns||1,html='<p><br></p>')=>{const p=blankPage(orientation,columns,html);p.border=activePage()?.border?{...activePage().border!}:undefined;const idx=Math.max(0,activity.pages.findIndex(x=>x.id===activePageId));activity.pages.splice(idx+1,0,p);activePageId=p.id;renderPages();scheduleSave();};
 $('addPageBtn').addEventListener('click',()=>addPage());
+$('paginationToggleBtn').addEventListener('click',()=>{activity.manualPagination=!activity.manualPagination;renderPages();scheduleSave();toast(activity.manualPagination?'Paginação manual ativada.':'Paginação inteligente ativada.');});
+$('pullPageBtn').addEventListener('click',()=>manualPull(activity.pages.findIndex(p=>p.id===activePageId)));
+$('removeBreakBtn').addEventListener('click',()=>{const i=activity.pages.findIndex(p=>p.id===activePageId);if(i<1){toast('Selecione a página posterior à quebra.');return;}manualPull(i-1,true);});
+$('reflowPagesBtn').addEventListener('click',()=>{if(activity.originalLayout){toast('Documento com layout original: ajuste manualmente.');return;}activity.manualPagination=false;renderPages();rebalanceOverflow(activity.pages[0].id,false,true);scheduleSave();toast('Páginas automáticas reorganizadas. Quebras manuais preservadas.');});
+$('manualBreakBtn').addEventListener('click',()=>{const ed=activeEditor(),p=activePage(),r=savedRange;if(!ed||!r||!ed.contains(r.startContainer)){toast('Posicione o cursor no bloco que deve iniciar a próxima página.');return;}let node:Node=r.startContainer;while(node.parentNode&&node.parentNode!==ed)node=node.parentNode;if(node===ed){if(r.startOffset>=ed.childNodes.length){addPage();activity.manualPagination=true;renderPages();scheduleSave();return;}node=ed.childNodes[r.startOffset];}if(!node||node.parentNode!==ed||activity.objects.some(o=>o.pageId===p.id)){toast('Não é possível dividir neste ponto com segurança.');return;}const fragment=document.createElement('div');while(node){const next=node.nextSibling;fragment.append(node);if(!next)break;node=next;}p.html=ed.innerHTML||'<p><br></p>';const newPage={...blankPage(p.orientation,p.columns,fragment.innerHTML),autoFlow:false,border:p.border?{...p.border}:undefined};activity.pages.splice(activity.pages.indexOf(p)+1,0,newPage);activePageId=newPage.id;activity.manualPagination=true;renderPages();scheduleSave();pageEditor(newPage.id)?.focus();});
+
 $('duplicatePageBtn').addEventListener('click',()=>{const p=activePage();if(!p)return;const copy={...structuredClone(p),id:newId()};const idx=activity.pages.findIndex(x=>x.id===p.id);activity.pages.splice(idx+1,0,copy);activity.objects.filter(o=>o.pageId===p.id).forEach(o=>activity.objects.push({...structuredClone(o),id:newId(),pageId:copy.id}));activePageId=copy.id;renderPages();scheduleSave();});
 $('deletePageBtn').addEventListener('click',()=>{if(activity.pages.length===1){toast('O documento precisa ter pelo menos uma página.');return;}const idx=activity.pages.findIndex(p=>p.id===activePageId);activity.objects=activity.objects.filter(o=>o.pageId!==activePageId);activity.pages.splice(idx,1);activePageId=activity.pages[Math.max(0,idx-1)].id;renderPages();scheduleSave();});
 const setOrientation=(orientation:Orientation,all=false)=>{(all?activity.pages:[activePage()]).filter(Boolean).forEach(p=>{if(p)p.orientation=orientation;});renderPages();scheduleSave();};
@@ -771,7 +815,7 @@ const shareDialog=document.createElement('dialog');shareDialog.className='modal 
 $('closeShare').onclick=()=>shareDialog.close();$('shareWA').onclick=()=>{if(!shareFile)return;window.open('https://wa.me/?text='+encodeURIComponent('Segue a atividade: '+shareFile.name),'_blank','noopener,noreferrer');downloadBlob(shareFile,shareFile.name);$('shareMessage').textContent='Escolha o contato no WhatsApp e anexe o PDF baixado pelo clipe. Nenhum documento foi publicado em link público.';};
 $('shareNative').onclick=async()=>{if(!shareFile)return;try{await navigator.share({files:[shareFile],title:shareFile.name});}catch(e){if((e as Error).name!=='AbortError')$('shareMessage').textContent='Use Baixar PDF e abrir WhatsApp.';}};
 $('shareBtn').addEventListener('click',async()=>{shareFile=null;$<HTMLButtonElement>('shareWA').disabled=true;$('shareNative').hidden=true;const filename=`${activity.libraryName||activity.title||'atividade'}.pdf`;const native=typeof navigator.share==='function'&&typeof navigator.canShare==='function'&&navigator.canShare({files:[new File([''],filename,{type:'application/pdf'})]});let direct=false;if(!native){try{const tab=window.open('about:blank','_blank');if(tab){tab.opener=null;tab.location.href='https://wa.me/?text='+encodeURIComponent('Segue a atividade: '+filename);direct=true;}}catch{}}$('shareMessage').textContent=direct?'WhatsApp aberto. Preparando o PDF para anexar…':'Preparando arquivo…';shareDialog.showModal();try{const blob=await makePdfBlob('activity');shareFile=new File([blob],filename,{type:'application/pdf'});$<HTMLButtonElement>('shareWA').disabled=false;$('shareNative').hidden=!native;if(direct){downloadBlob(shareFile,shareFile.name);$('shareMessage').textContent='PDF baixado. No WhatsApp, escolha o contato e anexe o PDF pelo clipe. Se a janela não abrir, use o botão abaixo.';}else $('shareMessage').textContent='PDF pronto. Abra o WhatsApp e anexe o arquivo, ou use o envio nativo de arquivos quando disponível.';}catch(e){$('shareMessage').textContent=(e as Error).message||'Não foi possível gerar o PDF.';}});
-$('previewBtn').addEventListener('click',async()=>{if(!activity.originalLayout&&activity.pages.length)rebalanceOverflow(activity.pages[0].id,false);renderPreview();showDialog('previewDialog');const mount=$('previewMount');const clones=[...mount.children] as HTMLElement[];const originals=[...pagesMount.querySelectorAll<HTMLElement>('.page')];try{for(let i=0;i<originals.length;i++){const canvas=await pageToCanvas(originals[i]);if(!$<HTMLDialogElement>('previewDialog').open||!clones[i]?.isConnected)return;const img=document.createElement('img');img.src=canvas.toDataURL('image/png');img.alt='Prévia da página '+(i+1);img.className='exact-preview-image';const d=pageDims(activity.pages[i].orientation);img.style.width=d.width+'mm';img.style.height=d.height+'mm';clones[i].replaceWith(img);}}catch{toast('Prévia visual alternativa; o PDF mantém a renderização de impressão.');}});$('printBtn').addEventListener('click',()=>window.print());
+$('previewBtn').addEventListener('click',async()=>{if(!activity.originalLayout&&activity.pages.length)rebalanceOverflow(activity.pages[0].id,false);if(activity.manualPagination&&[...pagesMount.querySelectorAll<HTMLElement>('.editor')].some(ed=>ed.scrollHeight>ed.clientHeight+4||ed.scrollWidth>ed.clientWidth+4)){toast('Há conteúdo fora da área A4. Ajuste a paginação antes de visualizar.');return;}renderPreview();showDialog('previewDialog');const mount=$('previewMount');const clones=[...mount.children] as HTMLElement[];const originals=[...pagesMount.querySelectorAll<HTMLElement>('.page')];try{for(let i=0;i<originals.length;i++){const canvas=await pageToCanvas(originals[i]);if(!$<HTMLDialogElement>('previewDialog').open||!clones[i]?.isConnected)return;const img=document.createElement('img');img.src=canvas.toDataURL('image/png');img.alt='Prévia da página '+(i+1);img.className='exact-preview-image';const d=pageDims(activity.pages[i].orientation);img.style.width=d.width+'mm';img.style.height=d.height+'mm';clones[i].replaceWith(img);}}catch{toast('Prévia visual alternativa; o PDF mantém a renderização de impressão.');}});$('printBtn').addEventListener('click',()=>window.print());
 
 // Metadados privados das questões: nunca exibidos no corpo impresso.
 function linkedQuestions(source:Activity=activity){const out:Array<{curriculumIds?:string[];curriculumObjects?:string[];name:string;skill:string;topic:string;answer:string;commented:string;numbered:boolean;number:number;includeKey:boolean;label:string}>=[];const seen=new Set<string>();for(const page of source.pages){const doc=new DOMParser().parseFromString(page.html,'text/html');for(const block of doc.querySelectorAll<HTMLElement>('[data-q-link]')){const id=block.dataset.qLink||'',q=source.questionLinks?.[id];if(!q||seen.has(id)||!block.textContent?.trim()&&!block.querySelector('img,table'))continue;seen.add(id);const number=block.textContent?.trim().match(/^(\d{1,4})[.)]/)?.[1];out.push({...q,label:number||String(out.length+1)});}}return out;}
@@ -789,7 +833,7 @@ $('keySimple').onclick=()=>changeKeyMode('simple');$('keyCommented').onclick=()=
 $('keyDownload').onclick=async()=>{const source=keySource();try{downloadBlob(await makePdfBlob('key',source),(source.libraryName||source.title)+' - Gabarito.pdf');}catch(e){toast((e as Error).message);}};
 const keyPreviewDialog=document.createElement('dialog');keyPreviewDialog.className='modal wide-modal key-preview-dialog';keyPreviewDialog.innerHTML='<div class="modal-head"><strong>Visualização A4 — Gabarito</strong><button id="keyPreviewClose">✕</button></div><div id="keyPreviewMount"></div>';document.body.append(keyPreviewDialog);let keyPreviewUrl='';keyPreviewDialog.addEventListener('close',()=>{if(keyPreviewUrl)URL.revokeObjectURL(keyPreviewUrl);keyPreviewUrl='';$('keyPreviewMount').replaceChildren();});$('keyPreviewClose').onclick=()=>keyPreviewDialog.close();$('keyPreview').onclick=async()=>{const btn=$<HTMLButtonElement>('keyPreview');btn.disabled=true;try{const blob=await makePdfBlob('key',keySource());keyPreviewUrl=URL.createObjectURL(blob);const frame=document.createElement('iframe');frame.title='Gabarito em PDF A4';frame.src=keyPreviewUrl;const link=document.createElement('a');link.href=keyPreviewUrl;link.target='_blank';link.rel='noopener';link.textContent='Abrir PDF em outra aba';$('keyPreviewMount').replaceChildren(link,frame);keyPreviewDialog.showModal();}catch(e){toast((e as Error).message);}finally{btn.disabled=false;}};
 // Plano provisório, editável e independente da atividade original.
-const curricular=setupCurriculum(async()=>{await persist();const docs=await mergeRemoteLibrary(getLibrary());const rows=docs.filter(x=>x.libraryName&&x.collection!=='reference');if(!rows.some(x=>x.id===activity.id)&&activity.pages.some(p=>stripHtml(p.html).trim()))rows.unshift(activity);return rows.map(a=>({id:a.id,name:a.libraryName||a.title+' (rascunho atual)',school:a.school,teacher:a.teacher,subject:a.subject,grade:a.grade,title:a.title,component:a.component,questions:linkedQuestions(a)} as Source));});$('lessonPlanBtn').onclick=()=>curricular.plans();$('curriculumBtn').onclick=()=>curricular.skills();window.addEventListener('online',()=>void syncCurriculum().catch(()=>{}));
+const curricular=setupCurriculum(async()=>{await persist();const docs=await mergeRemoteLibrary(getLibrary());const rows=docs.filter(x=>x.libraryName&&x.collection!=='reference');if(!rows.some(x=>x.id===activity.id)&&activity.pages.some(p=>stripHtml(p.html).trim()))rows.unshift(activity);return rows.map(a=>({id:a.id,name:a.libraryName||a.title+' (rascunho atual)',school:a.school,teacher:a.teacher,subject:a.subject,grade:a.grade,title:a.title,component:a.component,questions:linkedQuestions(a)} as Source));},autosaveSeconds);$('lessonPlanBtn').onclick=()=>curricular.plans();$('curriculumBtn').onclick=()=>curricular.skills();window.addEventListener('online',()=>void syncCurriculum().catch(()=>{}));
 // Gabarito
 const eligibleKeys=(rows:Activity[])=>rows.filter(x=>x.collection!=='reference'&&!!x.libraryName&&!x.tags?.includes('modelo-pedagogico')&&!deletedIds().includes(x.id)&&(linkedQuestions(x).some(q=>q.includeKey)||!!stripHtml(x.answerKeyHtml).trim()));
 function displayKeyRows(rows:Activity[],preferred:string){const eligible=eligibleKeys(rows);const id=eligible.some(x=>x.id===preferred)?preferred:eligible[0]?.id||'';fillKeySelect(eligible,id);const select=$<HTMLSelectElement>('keyActivitySelect');select.disabled=!id;for(const btn of ['keyPreview','keySimple','keyCommented','keyDownload','saveAnswerKeyBtn'])$<HTMLButtonElement>(btn).disabled=!id;$<HTMLTextAreaElement>('answerKeyEditor').disabled=!id;const target=eligible.find(x=>x.id===id);if(!target){keyTarget=null;$('keyActivityName').textContent='Nenhum gabarito cadastrado';$('keyLinkedStatus').textContent='Salve uma atividade com questões e gabarito para consultá-la aqui.';$<HTMLTextAreaElement>('answerKeyEditor').value='';return;}keyTarget=target.id===activity.id?null:structuredClone(target);showKeyText();}
@@ -936,7 +980,7 @@ async function startupSyncImpl(){
 }
 dataStorage.setItem(AUX_QUEUE_KEY,compactJson(auxPending().filter(r=>r.kind!=='history')));
 window.addEventListener('online',()=>{void startupSync();});
-window.setInterval(()=>{if(navigator.onLine){if(pending().length||deletedIds().some(i=>!deletionAck().includes('activity:'+i)))void flushActivities();if(imagePending().length||imageDeleted().some(i=>!deletionAck().includes('image:'+i)))void flushImages();if(auxPending().length)void flushAux();}},30000);
+window.setInterval(()=>{if(navigator.onLine){if(pending().length||deletedIds().some(i=>!deletionAck().includes('activity:'+i)))void flushActivities();if(imagePending().length||imageDeleted().some(i=>!deletionAck().includes('image:'+i)))void flushImages();if(auxPending().length)void flushAux();if(hasCurriculumPending())void syncCurriculum().catch(()=>{});}},30000);
 // Área pedagógica: abre novos documentos independentes, preservando o atual.
 function pedagogicalHtml(html:string){const doc=new DOMParser().parseFromString(html,'text/html');for(const el of doc.body.querySelectorAll<HTMLElement>('p,li,td,th,h1,h2,h3')){const centered=el.style.textAlign==='center'||/^H[1-3]$/.test(el.tagName);el.style.fontFamily='Arial, sans-serif';el.style.fontSize='12pt';el.style.lineHeight='1.15';el.style.marginTop='0';el.style.marginBottom=el.matches('p')?'3pt':'0';el.style.textAlign=centered?'center':'justify';if(el.classList.contains('answer-lines')){const count=Math.max(1,el.querySelectorAll('br').length+1);el.classList.remove('answer-lines');el.classList.add('ped-answer-lines');el.replaceChildren(...Array.from({length:count},()=>{const line=doc.createElement('span');line.className='ped-answer-line';line.innerHTML='&nbsp;';return line;}));}}return doc.body.innerHTML;}
 function paintPedagogical(){const component=$<HTMLSelectElement>('pedComponent').value as ComponentKind;const list=pedagogicalModels[component];$('pedModels').innerHTML=list.map((m,i)=>`<button class="model-card" data-ped="${i}"><strong>${escapeHtml(m.name)}</strong><small>${escapeHtml(m.description)}</small></button>`).join('');$('pedModels').querySelectorAll<HTMLButtonElement>('[data-ped]').forEach(b=>b.addEventListener('click',async()=>{const m=list[Number(b.dataset.ped)];if(!m)return;await persist();const next=blankActivity(component);next.school=activity.school;next.teacher=activity.teacher;next.headerStyles=structuredClone(activity.headerStyles||{});next.logoDataUrl=activity.logoDataUrl;next.personalLogoDataUrl=activity.personalLogoDataUrl;next.showPersonalLogo=activity.showPersonalLogo;next.showPageNumbers=activity.showPageNumbers;next.grade=$<HTMLSelectElement>('pedGrade').value;next.libraryName=m.name+' — '+next.grade;next.margins={...activity.margins};next.pages=[blankPage('portrait',1,pedagogicalHtml(m.html))];next.tags=['modelo-pedagogico'];next.answerKeyHtml=(m.key||'').split('\n').filter(Boolean).map(l=>`<p>${escapeHtml(l)}</p>`).join('');activity=next;activePageId=next.pages[0].id;selectedObjectId=null;render();closeDialog('pedagogicalDialog');scheduleSave();void persist();toast('Modelo criado em Minhas Atividades.');}));}
