@@ -114,3 +114,25 @@ Veja ATUALIZACAO_V16_GITHUB.txt. Novo acervo curricular com 14 registros oficiai
 ## V17
 Cabeçalho de plano com divisórias, título 16 pt sem faixa, assinaturas próximas; sugestões pedagógicas individualizadas para 14 registros; visualização independente de atividades e seletor curricular em painel separado. Mantidas as chaves e funções de armazenamento V16. Sugestões iniciais são atualizadas apenas em registros de origem não editados.
 Validação: TypeScript com declaração temporária simulada de Identity; testes de navegador e deploy pendentes.
+
+## V18
+- Editor de planos com barra única de formatação e campos rich text; planos anteriores continuam legíveis e editáveis.
+- Formatação armazenada em `richFields` junto com os campos textuais; prévia e impressão usam o mesmo conteúdo sanitizado. Campos vazios permanecem omitidos.
+- Sugestões de conteúdos de Língua Inglesa no campo Conteúdo / tema do banco de questões, com digitação livre. São sugestões gerais, não classificação curricular oficial.
+- Nenhuma alteração de chave de armazenamento ou de função Netlify; limite atual de 500 KB por registro curricular continua aplicável (o editor limita a 480 KB).
+- Teste local TypeScript com declaração temporária do SDK Identity; build Netlify, testes de interação no navegador e PDF real pendentes.
+
+## V19
+- Categorias personalizadas reutilizam a chave de armazenamento dos filtros antigos. O formato de resposta continua independente, para não afetar alternativas, linhas e gabarito.
+- Pesquisa por texto durante a digitação e seletor único de categorias. Registros anteriores continuam disponíveis; renomear/excluir uma categoria do cadastro não altera retroativamente as classificações antigas.
+- Importação removida da interface do banco, sem excluir questões existentes.
+- Desmarcação de imagens no editor principal, no banco e do contorno no editor de plano de aula. No plano ainda não há alças universais de edição.
+- TypeScript validado com declaração temporária simulada de Identity. Build Netlify e teste visual não executados.
+
+## V20 — Listagem compacta do banco
+- Apenas título e série são exibidos na listagem; habilidades, categorias, conteúdos e demais metadados continuam armazenados e pesquisáveis.
+- Todas as ações de cada questão permanecem disponíveis; a série não restringe a inserção em atividades.
+- Nenhuma alteração em armazenamento, backup ou funções Netlify.
+
+### Sugestão curricular V20
+O vínculo curricular sugere uma habilidade existente com base em termos do título, tema, categoria, enunciado e textos, respeitando componente, séries e filtros curriculares. A seleção manual tem prioridade; correspondências insuficientes ou empatadas não são forçadas. O mecanismo é lexical, não uma IA semântica. O formato de resposta permanece separado da categoria. Os dados e as chaves de armazenamento anteriores permanecem inalterados.
