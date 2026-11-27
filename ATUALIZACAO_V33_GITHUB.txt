@@ -1,0 +1,16 @@
+V33 (base V32)
+SUBSTITUIR:
+package.json
+README.md
+src/auth.ts
+src/main.ts
+src/question-bank.ts
+netlify/functions/delete-activity.mts
+netlify/functions/question-bank.mts
+
+ADICIONAR:
+src/trash-v33.ts
+src/smart-import-v33.ts
+src/recovery-seed-v33.ts
+
+Sem pasta nova; sem variáveis novas. Faça backup antes. Teste em Permalink.

@@ -265,3 +265,14 @@ TypeScript passou com declaração temporária do SDK Netlify Identity, excluíd
 ### Validação V32
 
 TypeScript: passou com declaração temporária do SDK Netlify Identity (não incluída). Testes isolados no Chromium: alinhamento das duas linhas ao mesmo ponto, preservação da lacuna no meio da frase, leitura das opções antigas marcadas, agrupamento 5/5/5/1 para 16 itens e geração de PNG de forma geométrica. O navegador bloqueou a abertura do aplicativo completo no ambiente de teste; portanto, não foi possível testar integralmente a paginação, o posicionamento, a prévia da atividade antiga, a gravação remota e a exportação real de PDF. Testar pelo Permalink antes de publicar. Nenhuma função Netlify ou chave de armazenamento foi alterada.
+
+
+## V33 — Segurança do acervo e importação inteligente
+- Configurações → Lixeira de atividades: restauração individual, sem botão de exclusão definitiva. A exclusão grava uma cópia local antes de remover o documento da lista; o servidor arquiva antes de excluir. Restauração na nuvem exige conexão e gera um ID novo, preservando os registros de exclusão.
+- Removida a limpeza geral de atividades antigas. Questões e atividades usam armazenamentos independentes; o conteúdo inserido e o gabarito são cópias próprias da atividade.
+- Banco de questões: mescla local/nuvem respeitando exclusões registradas, sem substituir o cache por uma resposta vazia. Não recupera itens que já foram apagados sem cópia.
+- Backup inclui a lixeira, atividades, rascunho, questões, imagens, modelos, currículo, planos, gabaritos, preferências e tema; originais antigos dependem de acesso à nuvem. Backup parcial é identificado e exige confirmação.
+- Arquivo → Importar PDF / Word: modo inteligente padrão, reconhecimento local por regras, textos editáveis, tentativas de recuperar imagens, colunas e tipos de questões. DOCX suportado; DOC antigo não. PDF digitalizado sem texto é preservado como imagem, sem OCR. Estruturas complexas exigem revisão. Não cadastra automaticamente questões no banco.
+- Recuperação inicial na conta autenticada: Carnaval, Black Awareness Day, Starter Unit Anytime, Listening Sara e UK English Culture. Três modelos anteriores são reutilizados e dois foram reconstruídos; respostas de Starter e Sara permanecem separadas. Não substitui registros existentes com o mesmo título/origem, nem recria automaticamente após a migração.
+- Testes locais: TypeScript com declaração temporária de Identity; teste de endpoint com armazenamento simulado (falha de arquivamento, exclusão, restauração individual, repetição, preservação de outro documento e do armazenamento de questões); teste de mescla da lixeira local; verificação de cinco modelos. Build Netlify, sessão real, PDF e DOCX reais no navegador e sincronização entre dispositivos ainda não validados.
+- Faça backup antes do deploy. Atualize os dois endpoints junto com o frontend; versões anteriores ainda podem possuir limpeza destrutiva.
