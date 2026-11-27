@@ -7,8 +7,11 @@ const handler = async (req: Request) => {
   try {
     const body = await req.json();
     const id = String(body.id || 'default');
-    const store = getStore('marks-class-activities');
-    await store.setJSON(id, body);
+    const store = getStore({name:'marks-class-activities',consistency:'strong'});
+    const tombstones=getStore({name:'marks-class-activity-deletions',consistency:'strong'});
+    if(await tombstones.get(id,{type:'json'}))return Response.json({ok:false,error:'Atividade excluída'}, {status:410});
+    const old=await store.get(id,{type:'json'});
+    if(!old||String(old.updatedAt||'')<=String(body.updatedAt||''))await store.setJSON(id, body);
     return Response.json({ ok: true, id });
   } catch (error) {
     return Response.json({ ok: false, error: String(error) }, { status: 500 });

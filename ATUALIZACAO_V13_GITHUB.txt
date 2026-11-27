@@ -1,0 +1,21 @@
+MARKS CLASS STUDIO — V13
+Base: V12.1. Faça um backup antes de atualizar. Feche outras abas com versões antigas.
+Substitua os arquivos abaixo, respeitando as pastas:
+  package.json
+  README.md
+  src/auth.ts
+  src/main.ts
+  src/question-bank.ts
+  netlify/functions/delete-activity.mts
+  netlify/functions/save-activity.mts
+  netlify/functions/list-activities.mts
+  netlify/functions/load-activity.mts
+  netlify/functions/question-bank.mts
+  netlify/shared/question-bank.mts
+Nenhum novo arquivo de código ou pasta. O registro de exclusões na nuvem usa um novo armazenamento Netlify Blobs criado automaticamente.
+
+Após publicar, entre pelo endereço habitual. Para remover registros legados que já reapareceram, use Configurações > Limpar atividades antigas (preservar rascunho). Confirme somente se não quiser manter nenhuma atividade do acervo. A operação mantém o conteúdo aberto como rascunho, o banco de questões e as imagens. Não execute se desejar manter atividades existentes. Não é executada automaticamente na atualização.
+
+Rascunhos sem nome ficam no armazenamento local do navegador e no backup; use Arquivo > Salvar para incluir em Minhas Atividades e sincronizar com a nuvem. Links de deploy diferentes podem ter armazenamento local separado. O gabarito por atividade lista documentos salvos com respostas ou questões com gabarito, excluindo modelos pedagógicos. Exclusões novas e antigas conhecidas localmente são registradas na nuvem. Backups antigos não reativam automaticamente IDs excluídos.
+
+Validação: TypeScript local com declaração simulada do SDK Identity; funções de atividades testadas com Netlify Blobs e autenticação simulados (criação, rejeição de salvamento antigo, exclusão, rejeição de reenvio, acervo vazio e nova criação). Teste de navegador não concluído neste ambiente. Deploy, PDF e sincronização real precisam ser validados no Netlify.

@@ -85,3 +85,7 @@ Consulte `ATUALIZACAO_V10_GITHUB.txt`. Não crie um projeto novo nem limpe o arm
 - Node compatível com Vite 7; `npm install`, `npm run build`, `npm run dev`.
 - Build Netlify: `npm run build`, publicação `dist`, funções em `netlify/functions`.
 - Testes nesta entrega: TypeScript 5.8.3 com declaração temporária do SDK Identity; 100 gerações de caça-palavras verificadas; Chromium com serviços, PDF e autenticação simulados (criação e busca, igualdade do HTML prévia/inserção, colagem/seleção de imagem, altura, recorte/remoção, arraste de linha de tabela, fluxo da prévia, compartilhamento e exportação de backup contendo grade e gabarito). O build real, renderização real com html2canvas, armazenamento no Netlify, importação de arquivos reais e abertura/envio pelo WhatsApp exigem validação no site publicado. Nenhuma declaração simulada foi incluída no pacote.
+
+## V13 — persistência e ajustes do banco
+
+Consulte `ATUALIZACAO_V13_GITHUB.txt` para os arquivos alterados e o procedimento de limpeza voluntária de registros legados. A aba Modelos foi retirada do topo; os dados antigos não são apagados automaticamente. O editor de interpretação de textos oferece imagem opcional antes do texto de apoio; a numeração é inserida no enunciado quando houver. Rascunhos sem nome permanecem locais até serem salvos como atividade. O backup inclui o rascunho separadamente. O gabarito lista atividades nomeadas com respostas vinculadas. As funções de atividades e questões respeitam registros de exclusão persistentes.

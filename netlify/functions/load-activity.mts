@@ -7,7 +7,8 @@ const handler = async (req: Request) => {
   const id = url.searchParams.get('id');
   if (!id) return Response.json({ ok: false, error: 'id obrigatório' }, { status: 400 });
   try {
-    const store = getStore('marks-class-activities');
+    const store = getStore({name:'marks-class-activities',consistency:'strong'});
+    if(await getStore({name:'marks-class-activity-deletions',consistency:'strong'}).get(id,{type:'json'}))return Response.json({ok:false,error:'Atividade excluída'},{status:404});
     const data = await store.get(id, { type: 'json' });
     if (!data) return Response.json({ ok: false, error: 'não encontrado' }, { status: 404 });
     return Response.json({ ok: true, data });

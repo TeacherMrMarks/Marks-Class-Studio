@@ -8,7 +8,8 @@ const handler = async (req: Request) => {
     const body = await req.json();
     const id = String(body.id || '');
     if (!id) return Response.json({ ok: false, error: 'id obrigatório' }, { status: 400 });
-    const store = getStore('marks-class-activities');
+    const store = getStore({name:'marks-class-activities',consistency:'strong'});
+    await getStore({name:'marks-class-activity-deletions',consistency:'strong'}).setJSON(id,{deleted:true});
     await store.delete(id);
     return Response.json({ ok: true });
   } catch (error) {
