@@ -1,0 +1,13 @@
+MARKS CLASS STUDIO V25 — Atualização sobre a V24 FINAL
+Faça backup antes de atualizar. Substitua:
+- package.json
+- README.md
+- index.html
+- src/auth.ts
+- src/main.ts
+- src/question-bank.ts
+- src/question-types.ts
+- netlify/functions/question-bank.mts
+Adicione:
+- src/activity-seed-v25.ts
+Nenhuma nova pasta ou variável de ambiente. Use um único commit e teste o Permalink autenticado antes de publicar. Os três exemplos de atividades são adicionados após consulta autenticada bem-sucedida ao acervo, respeitando IDs e exclusões existentes. Os textos são editáveis e a diagramação é aproximada. A terceira página de Listening Sara foi excluída; a de Starter Unit foi mantida. Listening aceita links externos, não upload de mídia. Teste Delete, Backspace, Ctrl+X, Ctrl+V e sincronização antes de uso em produção.
