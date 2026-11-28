@@ -374,3 +374,13 @@ html:not([data-mks-theme="original"]) :is(.modal,.sidebar,.top-chrome) :focus-vi
 @media(max-width:600px){.saved-preview-pages>.page{zoom:var(--mks-doc-zoom,.4)!important;}.plan-choice-grid{grid-template-columns:1fr;}}
 #pagesMount .editor,.saved-preview-pages .editor{min-height:0;}
 .mks-response-label{flex:0 1 auto;min-width:0;white-space:normal;}
+
+/* V34 — horizontal ruler stays in sticky toolbar; document scrolls independently. */
+.top-chrome .mks-fixed-ruler{width:100%;min-width:0;overflow:hidden;position:relative;background:var(--mks-panel,#0d1929);padding:0;}
+.top-chrome .mks-fixed-ruler .ruler-shell{margin-bottom:0!important;}
+.top-chrome .mks-fixed-ruler .ruler-shell[hidden]{display:none!important;}
+.top-chrome.mks-editor-focus{flex-wrap:wrap;}
+.top-chrome .mks-fixed-ruler .margin-handle{touch-action:none;background:transparent!important;border:0!important;}
+.floating-object.image{cursor:move;user-select:none;}
+.editor img:not(.import-scan){cursor:move;}
+@media print{.mks-fixed-ruler{display:none!important;}}

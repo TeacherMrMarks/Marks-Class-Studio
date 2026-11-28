@@ -1,0 +1,16 @@
+V34 (base V33)
+SUBSTITUIR:
+package.json
+README.md
+src/auth.ts
+src/main.ts
+src/appearance.css
+
+Sem novas variáveis, dependências ou mudanças nos dados da biblioteca.
+Régua fixa na barra superior, alinhada à página ativa e à rolagem horizontal.
+Imagens: arrastar diretamente e ajustar com setas. Ao mover uma imagem ancorada,
+a posição passa a ser livre (à frente do texto, exceto se já estiver atrás).
+Os modos de contorno continuam disponíveis no menu de imagem.
+Faça backup antes e teste em Permalink: recuos, arraste, setas, salvar/reabrir e PDF.
+Validação local: tsc não indicou erros adicionais em relação à V33, mas a
+compilação completa não foi possível por falta das dependências npm no ambiente.

@@ -276,3 +276,9 @@ TypeScript: passou com declaração temporária do SDK Netlify Identity (não in
 - Recuperação inicial na conta autenticada: Carnaval, Black Awareness Day, Starter Unit Anytime, Listening Sara e UK English Culture. Três modelos anteriores são reutilizados e dois foram reconstruídos; respostas de Starter e Sara permanecem separadas. Não substitui registros existentes com o mesmo título/origem, nem recria automaticamente após a migração.
 - Testes locais: TypeScript com declaração temporária de Identity; teste de endpoint com armazenamento simulado (falha de arquivamento, exclusão, restauração individual, repetição, preservação de outro documento e do armazenamento de questões); teste de mescla da lixeira local; verificação de cinco modelos. Build Netlify, sessão real, PDF e DOCX reais no navegador e sincronização entre dispositivos ainda não validados.
 - Faça backup antes do deploy. Atualize os dois endpoints junto com o frontend; versões anteriores ainda podem possuir limpeza destrutiva.
+
+## V34 — Régua fixa e imagens com posição livre
+- Régua integrada à barra superior fixa, acompanhando largura e deslocamento horizontal da folha ativa.
+- Imagens importadas podem ser selecionadas e arrastadas diretamente; o movimento manual desvincula a âncora de texto e grava as coordenadas do objeto na atividade, inclusive via setas do teclado.
+- Modos de contorno, redimensionamento, visualização e armazenamento anteriores preservados. Mover livremente uma imagem ancorada pode reorganizar o texto; é possível selecionar novamente um modo de contorno.
+- Sem alteração de funções Netlify, chaves de armazenamento ou esquema de backup.
