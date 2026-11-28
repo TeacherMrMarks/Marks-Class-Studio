@@ -1,0 +1,1 @@
+V35 — substituir package.json, src/main.ts, src/auth.ts e src/appearance.css. README opcional. Régua: texto direto e cursor; tabelas: alça de movimento, alinhamento e setas; caixas de texto: alinhamento. Testar no Permalink antes de publicar. Arquivos antigos de instruções podem ser removidos.

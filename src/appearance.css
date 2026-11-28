@@ -384,3 +384,7 @@ html:not([data-mks-theme="original"]) :is(.modal,.sidebar,.top-chrome) :focus-vi
 .floating-object.image{cursor:move;user-select:none;}
 .editor img:not(.import-scan){cursor:move;}
 @media print{.mks-fixed-ruler{display:none!important;}}
+
+/* V35: table position controls are outside the editable document. */
+.mks-table-position-tools{position:absolute;left:0;top:-30px;display:flex;gap:3px;pointer-events:auto;z-index:6;white-space:nowrap}.mks-table-position-tools button{background:#087e83;color:#fff;border:1px solid #fff;border-radius:4px;min-width:27px;height:26px;padding:0 5px;cursor:pointer;touch-action:none}.mks-table-position-tools button[data-mode=move]{cursor:move}.mks-table-position-tools button:focus-visible{outline:2px solid #e2b552}
+@media print{.mks-table-position-tools{display:none!important}}

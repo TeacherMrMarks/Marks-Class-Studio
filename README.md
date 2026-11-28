@@ -282,3 +282,9 @@ TypeScript: passou com declaração temporária do SDK Netlify Identity (não in
 - Imagens importadas podem ser selecionadas e arrastadas diretamente; o movimento manual desvincula a âncora de texto e grava as coordenadas do objeto na atividade, inclusive via setas do teclado.
 - Modos de contorno, redimensionamento, visualização e armazenamento anteriores preservados. Mover livremente uma imagem ancorada pode reorganizar o texto; é possível selecionar novamente um modo de contorno.
 - Sem alteração de funções Netlify, chaves de armazenamento ou esquema de backup.
+
+
+## V35
+- Régua: recuos em texto direto e parágrafo com cursor.
+- Tabelas: controles de arraste, alinhamento e setas com persistência no HTML; preserva espaço original no fluxo.
+- Objetos flutuantes: alinhamento e posição livre.
